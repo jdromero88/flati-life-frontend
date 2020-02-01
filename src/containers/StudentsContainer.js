@@ -6,7 +6,7 @@ import StudentCard from '../components/StudentCard'
 const StudentsContainers = props => {
   return(
     <React.Fragment>
-      <Card.Group fluid>
+      <Card.Group itemsPerRow={3} fluid>
         {
           props.users.map(user => <StudentCard
             key={user.id}

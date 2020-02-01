@@ -5,11 +5,13 @@ import {connect} from 'react-redux'
 import {fetchingUsers} from './redux/actionCreators'
 import './App.css'
 import Header from './containers/Header'
+import Footer from './containers/Footer'
 import Home from './components/Home'
 import Projects from './components/Projects'
 import Students from './components/Students'
 import Resources from './components/Resources'
 import Technologies from './components/Technologies'
+import SignUp from './components/SignUp'
 
 class App extends Component {
   componentDidMount() {
@@ -22,6 +24,7 @@ class App extends Component {
         <Header />
         <Container>
           <Switch>
+            <Route exact path='/signup' component={SignUp} />
             <Route exact path='/technologies' component={Technologies} />
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
@@ -29,6 +32,7 @@ class App extends Component {
             <Route path='/' component={Home} />
           </Switch>
         </Container>
+        <Footer />
       </div>
     )
   }

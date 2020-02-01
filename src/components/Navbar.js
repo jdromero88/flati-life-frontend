@@ -11,7 +11,7 @@ const Navbar = () => {
           <Image src={logo} size='tiny'/>
         </Link>
       </Menu.Item>
-      <NavLink to='/' className='active item'>Home</NavLink>
+      <NavLink to='/' className='item'>Home</NavLink>
       <NavLink to='/projects' className='item'>Projects</NavLink>
       <NavLink to='/students' className='item'>Students</NavLink>
       <NavLink to='/resources' className='item'>Resources</NavLink>
