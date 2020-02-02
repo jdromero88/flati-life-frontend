@@ -12,6 +12,7 @@ import Students from './components/Students'
 import Resources from './components/Resources'
 import Technologies from './components/Technologies'
 import SignUp from './components/SignUp'
+import Login from './components/Login'
 
 class App extends Component {
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends Component {
         <Container>
           <Switch>
             <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/login' component={Login} />
             <Route exact path='/technologies' component={Technologies} />
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
@@ -40,6 +42,5 @@ class App extends Component {
 const mapDispatchToProps = (dispatch) => ({
   fetchingUsers: () => {dispatch(fetchingUsers())}
 })
-
 
 export default withRouter(connect(null, mapDispatchToProps)(App))
