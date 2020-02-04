@@ -1,10 +1,10 @@
 import React from 'react'
 import StudentsContainer from '../containers/StudentsContainer'
+import {Divider} from 'semantic-ui-react'
 const Students = () => {
   return (
     <React.Fragment>
-      <h1>Students</h1>
-      <h2>Students List</h2>
+      <Divider hidden/>
       <StudentsContainer />
     </React.Fragment>
   )

@@ -8,14 +8,12 @@ const StudentCard = props => {
           <Card.Content>
             <Image
               floated='right'
-              size='mini'
+              size='tiny'
               src={user.avatar}
             />
             <Card.Header>{user.first_name +' '+user.last_name}</Card.Header>
-            <Card.Meta>Friends of Elliot</Card.Meta>
-            <Card.Description>
-              Steve wants to add you to the group <strong>best friends</strong>
-            </Card.Description>
+            <Card.Meta>Username: {user.username}</Card.Meta>
+
           </Card.Content>
         </Card>
     </React.Fragment>

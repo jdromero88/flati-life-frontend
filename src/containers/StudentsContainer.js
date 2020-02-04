@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import { Card } from 'semantic-ui-react'
 import StudentCard from '../components/StudentCard'
 
-const StudentsContainers = props => {
+const StudentsContainer = props => {
   return(
     <React.Fragment>
       <Card.Group itemsPerRow={3} fluid>
@@ -20,10 +20,6 @@ const StudentsContainers = props => {
 }
 
 //reading from state
-const mapStateToProps = state => {
-  return {
-    users: state.users
-  }
-}
+const mapStateToProps = state => ({users: state.users})
 
-export default connect(mapStateToProps)(StudentsContainers)
+export default connect(mapStateToProps)(StudentsContainer)

@@ -1,11 +1,20 @@
 import {combineReducers} from 'redux'
-import {FETCHED_USERS, SET_CURRENT_USER} from './actionType'
+import {FETCHED_USERS,
+  FETCHED_PROJECTS
+} from './actionType'
 
 const usersReducers = (oldState=[], action) => {
   switch(action.type){
     case FETCHED_USERS:
       return action.payload
-    case SET_CURRENT_USER:
+    default:
+      return oldState
+  }
+}
+
+const projectsReducers = (oldState=[], action) => {
+  switch(action.type){
+    case FETCHED_PROJECTS:
       return action.payload
     default:
       return oldState
@@ -13,7 +22,8 @@ const usersReducers = (oldState=[], action) => {
 }
 
 const rootReducer = combineReducers({
-  users: usersReducers
+  users: usersReducers,
+  projects: projectsReducers,
 })
 
 export default rootReducer

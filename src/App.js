@@ -2,12 +2,16 @@ import React, {Component} from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import { Container } from "semantic-ui-react"
 import {connect} from 'react-redux'
-import {fetchingUsers} from './redux/actionCreators'
+import {
+  fetchingUsers,
+  fetchingProjects
+} from './redux/actionCreators'
 import './App.css'
 import Header from './containers/Header'
 import Footer from './containers/Footer'
 import Home from './components/Home'
 import Projects from './components/Projects'
+import ProjectDetails from './components/ProjectDetails'
 import Students from './components/Students'
 import Resources from './components/Resources'
 import Technologies from './components/Technologies'
@@ -17,11 +21,12 @@ import Login from './components/Login'
 class App extends Component {
   componentDidMount() {
     this.props.fetchingUsers()
+    this.props.fetchingProjects()
   }
 
   render(){
     return (
-      <div>
+      <React.Fragment>
         <Header />
         <Container>
           <Switch>
@@ -31,16 +36,27 @@ class App extends Component {
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
             <Route exact path='/projects' component={Projects} />
-            <Route path='/' component={Home} />
+            <Route exact path='/' component={Home} />
+
+            <Route exact path ='/projects/:id' render={() => {
+              console.log(this)
+              const projectID = parseInt(window.location.href.split('/').pop())
+              // const projectID = this.props.match.params.id
+              console.log('project id in app',projectID)
+              const currentProject = this.props.projects.find(project => project.id === projectID)
+              return <ProjectDetails project={currentProject} />
+            }} />
           </Switch>
         </Container>
         <Footer />
-      </div>
+      </React.Fragment>
     )
   }
 }
 const mapDispatchToProps = (dispatch) => ({
-  fetchingUsers: () => {dispatch(fetchingUsers())}
+  fetchingUsers: () => {dispatch(fetchingUsers())},
+  fetchingProjects: () => {dispatch(fetchingProjects())}
 })
 
-export default withRouter(connect(null, mapDispatchToProps)(App))
+const mapStateToProps = state => ({projects: state.projects})
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

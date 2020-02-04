@@ -1,8 +1,11 @@
 import { LOADING_USERS,
   FETCHED_USERS,
-  SET_CURRENT_USER} from './actionType'
+  LOADING_PROJECTS,
+  FETCHED_PROJECTS,
+} from './actionType'
 
 const URL = 'http://localhost:3000/users'
+const PROJECTS_URL = 'http://localhost:3000/projects'
 
 function loadingUsers() {
   return {type: LOADING_USERS}
@@ -10,26 +13,6 @@ function loadingUsers() {
 
 function fetchedUsers(usersArray) {
   return {type: FETCHED_USERS, payload: usersArray}
-}
-
-function loadCurrentUser() {
-  return {type: SET_CURRENT_USER}
-}
-
-function setCurrentUser(currentUser) {
-  return {type: SET_CURRENT_USER, payload: currentUser}
-}
-
-function getCurrentUser() {
-  return (dispatch) => {
-    dispatch(setCurrentUser())
-    fetch(URL)
-    .then(res => res.json())
-    .then(currentUser => {
-      dispatch(setCurrentUser(currentUser))
-    })
-    .catch(err => console.warn(err))
-  }
 }
 
 function fetchingUsers() {
@@ -43,4 +26,25 @@ function fetchingUsers() {
     .catch(err => console.warn(err))
   }
 }
-export {fetchingUsers, getCurrentUser}
+
+// Projects
+function loadingProjects() {
+  return {type: LOADING_PROJECTS}
+}
+
+function fetchedProjects(projectsArray) {
+  return {type: FETCHED_PROJECTS, payload: projectsArray}
+}
+
+function fetchingProjects() {
+  return (dispatch) => {
+    dispatch(loadingProjects())
+    fetch(PROJECTS_URL)
+    .then(res => res.json())
+    .then(projectsArray => {
+      dispatch(fetchedProjects(projectsArray))
+    })
+    .catch(err => console.warn(err))
+  }
+}
+export {fetchingUsers, fetchingProjects}
