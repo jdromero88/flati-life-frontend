@@ -1,12 +1,15 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {Card} from 'semantic-ui-react'
+import {Card, Divider} from 'semantic-ui-react'
 import ProjectCard from '../components/ProjectCard'
+import SearchBar from '../components/SearchBar'
 
 const ProjectsContainer = props => {
   return(
     <React.Fragment>
+      <SearchBar />
+      <Divider />
       <Card.Group itemsPerRow={3} fluid>
         {
           props.projects.map(project =>
@@ -21,10 +24,7 @@ const ProjectsContainer = props => {
   )
 }
 
-const mapStateToProps = state => {
-  return{
-    projects: state.projects
-  }
-}
+const mapStateToProps = store => ({projects: store.projects.filter(project => project.name.toLowerCase().includes(store.searchText.toLowerCase()))
 
+})
 export default connect(mapStateToProps)(ProjectsContainer)

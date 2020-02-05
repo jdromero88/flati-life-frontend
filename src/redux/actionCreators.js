@@ -1,4 +1,4 @@
-import { LOADING_USERS,
+import { SEARCH_TEXT, LOADING_USERS,
   FETCHED_USERS,
   LOADING_PROJECTS,
   FETCHED_PROJECTS,
@@ -6,6 +6,10 @@ import { LOADING_USERS,
 
 const URL = 'http://localhost:3000/users'
 const PROJECTS_URL = 'http://localhost:3000/projects'
+
+function onSearch(searchText) {
+  return {type: SEARCH_TEXT, payload: searchText}
+}
 
 function loadingUsers() {
   return {type: LOADING_USERS}
@@ -47,4 +51,4 @@ function fetchingProjects() {
     .catch(err => console.warn(err))
   }
 }
-export {fetchingUsers, fetchingProjects}
+export {fetchingUsers, fetchingProjects, onSearch}
