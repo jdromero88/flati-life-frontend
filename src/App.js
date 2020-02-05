@@ -13,6 +13,7 @@ import Home from './components/Home'
 import Projects from './components/Projects'
 import ProjectDetails from './components/ProjectDetails'
 import Students from './components/Students'
+import StudentDetails from './components/StudentDetails'
 import Resources from './components/Resources'
 import Technologies from './components/Technologies'
 import SignUp from './components/SignUp'
@@ -35,17 +36,23 @@ class App extends Component {
             <Route exact path='/technologies' component={Technologies} />
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
+            <Route exact path='/students/:id' render={() => {
+                const studentID = parseInt(window.location.href.split('/').pop())
+                const currentStudent = this.props.users.find(student => student.id === studentID)
+                return <StudentDetails student={currentStudent}/>
+              }
+            }/>
             <Route exact path='/projects' component={Projects} />
             <Route exact path='/' component={Home} />
-
             <Route exact path ='/projects/:id' render={() => {
-              console.log(this)
-              const projectID = parseInt(window.location.href.split('/').pop())
-              // const projectID = this.props.match.params.id
-              console.log('project id in app',projectID)
-              const currentProject = this.props.projects.find(project => project.id === projectID)
-              return <ProjectDetails project={currentProject} />
-            }} />
+                // console.log(this)
+                const projectID = parseInt(window.location.href.split('/').pop())
+                // const projectID = this.props.match.params.id
+                // console.log('project id in app',projectID)
+                const currentProject = this.props.projects.find(project => project.id === projectID)
+                return <ProjectDetails project={currentProject} />
+              }
+            } />
           </Switch>
         </Container>
         <Footer />
@@ -58,5 +65,5 @@ const mapDispatchToProps = (dispatch) => ({
   fetchingProjects: () => {dispatch(fetchingProjects())}
 })
 
-const mapStateToProps = state => ({projects: state.projects})
+const mapStateToProps = state => ({projects: state.projects, users: state.users})
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

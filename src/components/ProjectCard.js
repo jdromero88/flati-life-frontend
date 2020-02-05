@@ -8,7 +8,7 @@ const ProjectCard = props => {
     <React.Fragment>
       <Card
       as={Link}
-      to={`/projects/${props.project.id}`}
+      to={`/projects/${project.id}`}
       >
         <Card.Content>
         <Image

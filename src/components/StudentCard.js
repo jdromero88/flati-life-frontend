@@ -1,10 +1,14 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import { Card, Image } from 'semantic-ui-react'
 const StudentCard = props => {
   const user = props.user
   return(
     <React.Fragment>
-        <Card>
+        <Card
+          as={Link}
+          to={`/students/${user.id}`}
+        >
           <Card.Content>
             <Image
               floated='right'
