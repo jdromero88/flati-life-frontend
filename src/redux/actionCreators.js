@@ -4,11 +4,14 @@ import { SEARCH_TEXT,
   CREATE_USER,
   FETCHED_USERS,
   FETCHED_PROJECTS,
+  CREATE_TECHNOLOGY,
+  FETCHED_TECHNOLOGY,
 } from './actionType'
 
 const USER_URL = 'http://localhost:3000/users'
 const USER_LOGIN_URL = 'http://localhost:3000/users/login'
 const PROJECTS_URL = 'http://localhost:3000/projects'
+const TECHNOLOGIES_URL = 'http://localhost:3000/tech_specifications'
 
 function onSearch(searchText) {
   return {type: SEARCH_TEXT, payload: searchText}
@@ -58,7 +61,9 @@ function createUser(newUser) {
     fetch(USER_URL, confObj)
     .then(res => res.json())
     .then(newUser => {
-      dispatch(createdUser(newUser))
+      newUser ?
+        dispatch(createdUser(newUser))
+      : alert('Something went wrong')
     })
     .catch(err => console.warn(err))
   }
@@ -82,6 +87,45 @@ function fetchingUsers() {
     .catch(err => console.warn(err))
   }
 }
+//Technologies
+function createdTechnology(technology) {
+  return{type: CREATE_TECHNOLOGY, payload:technology}
+}
+function createTechnology(newTechnology) {
+  return dispatch => {
+    const confObj = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({technology: newTechnology})
+    }
+    dispatch(loading())
+    fetch(TECHNOLOGIES_URL, confObj)
+    .then(res => res.json())
+    .then(newTechnology => {
+      newTechnology ?
+        dispatch(createdTechnology(newTechnology))
+      : alert('Something went wrong')
+    })
+    .catch(err => console.warn(err))
+  }
+}
+function fetchedTechnologies(technologiesArray) {
+  return {type: FETCHED_TECHNOLOGY, payload: technologiesArray}
+}
+function fetchingTechnologies() {
+  return (dispatch) => {
+    dispatch(loading())
+    fetch(TECHNOLOGIES_URL)
+    .then(res => res.json())
+    .then(technologiesArray => {
+      dispatch(fetchedTechnologies(technologiesArray))
+    })
+    .catch(err => console.warn(err))
+  }
+}
 
 // Projects
 function fetchedProjects(projectsArray) {
@@ -99,4 +143,5 @@ function fetchingProjects() {
     .catch(err => console.warn(err))
   }
 }
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser}
+
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser, createTechnology, fetchingTechnologies}

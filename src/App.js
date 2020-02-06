@@ -4,7 +4,8 @@ import { Container } from "semantic-ui-react"
 import {connect} from 'react-redux'
 import {
   fetchingUsers,
-  fetchingProjects
+  fetchingProjects,
+  fetchingTechnologies
 } from './redux/actionCreators'
 import './App.css'
 import Header from './containers/Header'
@@ -19,11 +20,13 @@ import Technologies from './components/Technologies'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Profile from './components/Profile'
+import AddTechnology from './components/AddTechnology'
 
 class App extends Component {
   componentDidMount() {
     this.props.fetchingUsers()
     this.props.fetchingProjects()
+    this.props.fetchingTechnologies()
   }
 
   render(){
@@ -61,6 +64,10 @@ class App extends Component {
                 return <ProjectDetails project={currentProject} />
               }
             } />
+            <Route exact path='/add-technology' render={() => this.props.currentUser ?
+              <AddTechnology />
+              : <Redirect to='/login' />
+            } />
           </Switch>
         </Container>
         <Footer />
@@ -70,7 +77,9 @@ class App extends Component {
 }
 const mapDispatchToProps = (dispatch) => ({
   fetchingUsers: () => {dispatch(fetchingUsers())},
-  fetchingProjects: () => {dispatch(fetchingProjects())}
+  fetchingProjects: () => {dispatch(fetchingProjects())},
+  fetchingTechnologies: () => {dispatch(fetchingTechnologies())},
+
 })
 
 const mapStateToProps = store => ({projects: store.projects, users: store.users, currentUser: store.currentUser})

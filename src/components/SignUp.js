@@ -1,15 +1,20 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {createUser} from '../redux/actionCreators'
-import { Button, Checkbox, Form, Divider, Grid, Icon, Dropdown } from 'semantic-ui-react'
+import { Button,
+  Checkbox,
+  Form,
+  Divider,
+  Grid,
+  Icon } from 'semantic-ui-react'
 
 const cohortOptions = [
   { key: 'ch2', value: '1', text: 'dc11/14/2019' },
   { key: 'ch1', value: '2', text: 'dc01/24/2020' },
 ]
 const courseName = [
-  {key: 'se', value:'se', text: 'Software Engineer'},
-  {key: 'ds', value:'ds', text: 'Data Science'},
+  {key: 'se', value:'Software Engineer', text: 'Software Engineer'},
+  {key: 'ds', value:'Data Science', text: 'Data Science'},
 ]
 class SignUp extends React.Component{
   state = {
@@ -33,8 +38,13 @@ class SignUp extends React.Component{
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
+
   handleCohortSelection = (e, {value}) => {
     this.setState({ cohort_id: value })
+  }
+
+  handleCourseSelection = (e, {value}) => {
+    this.setState({ course_name: value })
   }
 
   handleSubmit = e => {
@@ -55,7 +65,7 @@ class SignUp extends React.Component{
     }
     e.preventDefault()
     this.props.createUser(newUser)
-    // this.props.history.push('/login')
+    this.props.history.push('/login')
   }
 
 
@@ -108,7 +118,7 @@ class SignUp extends React.Component{
               name='course_name'
               fluid
               selection
-              onChange={this.handleChange}
+              onChange={this.handleCourseSelection}
               options={courseName}
             />
             <Form.Input
@@ -133,7 +143,7 @@ class SignUp extends React.Component{
               value={value}
             />
             <Form.Field>
-              <Checkbox label='I agree to the Terms and Conditions' />
+              <Checkbox label='I agree to the Terms and Conditions' required/>
             </Form.Field>
             <Button type='submit'>Create Account</Button>
           </Form>
@@ -145,5 +155,5 @@ class SignUp extends React.Component{
 const mapDispatchToProps = dispatch => {
   return ({createUser: (user) => dispatch(createUser(user))})
 }
-const mapStateToProps = store => ({newUser: store.newUser})
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
+
+export default connect(null, mapDispatchToProps)(SignUp)

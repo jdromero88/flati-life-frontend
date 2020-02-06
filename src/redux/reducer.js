@@ -3,7 +3,9 @@ import {SEARCH_TEXT,
   LOGIN,
   CREATE_USER,
   FETCHED_USERS,
-  FETCHED_PROJECTS
+  FETCHED_PROJECTS,
+  CREATE_TECHNOLOGY,
+  FETCHED_TECHNOLOGY,
 } from './actionType'
 
 const searchTextReducer = (oldState='', action) => {
@@ -43,13 +45,26 @@ const projectsReducers = (oldState=[], action) => {
       return oldState
   }
 }
+const technologiesReducer = (oldState=[], action) => {
+  switch (action.type) {
+    case CREATE_TECHNOLOGY:
+      oldState.push(action.payload)
+      return oldState
+    case FETCHED_TECHNOLOGY:
+      return action.payload
+    default:
+      return oldState
+  }
+}
+
+
 
 const rootReducer = combineReducers({
   searchText: searchTextReducer,
   currentUser: currentUsersReducers,
-  newUser: currentUsersReducers,
   users: usersReducers,
   projects: projectsReducers,
+  technologies: technologiesReducer,
 })
 
 export default rootReducer
