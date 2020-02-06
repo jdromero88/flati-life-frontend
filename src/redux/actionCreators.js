@@ -1,18 +1,70 @@
-import { SEARCH_TEXT, LOADING_USERS,
+import { SEARCH_TEXT,
+  LOADING,
+  LOGIN,
+  CREATE_USER,
   FETCHED_USERS,
-  LOADING_PROJECTS,
   FETCHED_PROJECTS,
 } from './actionType'
 
-const URL = 'http://localhost:3000/users'
+const USER_URL = 'http://localhost:3000/users'
+const USER_LOGIN_URL = 'http://localhost:3000/users/login'
 const PROJECTS_URL = 'http://localhost:3000/projects'
 
 function onSearch(searchText) {
   return {type: SEARCH_TEXT, payload: searchText}
 }
 
-function loadingUsers() {
-  return {type: LOADING_USERS}
+function login(user) {
+  return {type: LOGIN, payload: user}
+}
+function loginUser(user) {
+  return dispatch => {
+    const confObj = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify(user)
+    }
+    dispatch(loading())
+    fetch(USER_LOGIN_URL,confObj)
+    .then(res => res.json())
+    .then(currentUser =>{
+      if (currentUser.message !== 'Incorrect username or password!'){
+        dispatch(login(currentUser))
+      }else {
+        alert('Wrong username or password')
+        dispatch(login(null))
+      }
+    })
+  }
+}
+
+function createdUser(user) {
+  return{type: CREATE_USER, payload:user}
+}
+function createUser(newUser) {
+  return dispatch => {
+    const confObj = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({user: newUser})
+    }
+    dispatch(loading())
+    fetch(USER_URL, confObj)
+    .then(res => res.json())
+    .then(newUser => {
+      dispatch(createdUser(newUser))
+    })
+    .catch(err => console.warn(err))
+  }
+}
+function loading() {
+  return {type:LOADING}
 }
 
 function fetchedUsers(usersArray) {
@@ -21,8 +73,8 @@ function fetchedUsers(usersArray) {
 
 function fetchingUsers() {
   return (dispatch) => {
-    dispatch(loadingUsers())
-    fetch(URL)
+    dispatch(loading())
+    fetch(USER_URL)
     .then(res => res.json())
     .then(usersArray => {
       dispatch(fetchedUsers(usersArray))
@@ -32,17 +84,13 @@ function fetchingUsers() {
 }
 
 // Projects
-function loadingProjects() {
-  return {type: LOADING_PROJECTS}
-}
-
 function fetchedProjects(projectsArray) {
   return {type: FETCHED_PROJECTS, payload: projectsArray}
 }
 
 function fetchingProjects() {
   return (dispatch) => {
-    dispatch(loadingProjects())
+    dispatch(loading())
     fetch(PROJECTS_URL)
     .then(res => res.json())
     .then(projectsArray => {
@@ -51,4 +99,4 @@ function fetchingProjects() {
     .catch(err => console.warn(err))
   }
 }
-export {fetchingUsers, fetchingProjects, onSearch}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser}

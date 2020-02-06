@@ -1,5 +1,8 @@
 import {combineReducers} from 'redux'
-import {SEARCH_TEXT, FETCHED_USERS,
+import {SEARCH_TEXT,
+  LOGIN,
+  CREATE_USER,
+  FETCHED_USERS,
   FETCHED_PROJECTS
 } from './actionType'
 
@@ -21,6 +24,17 @@ const usersReducers = (oldState=[], action) => {
   }
 }
 
+const currentUsersReducers = (oldState=null, action) => {
+  switch(action.type){
+    case LOGIN:
+      return action.payload
+    case CREATE_USER:
+      return action.payload
+    default:
+      return oldState
+  }
+}
+
 const projectsReducers = (oldState=[], action) => {
   switch(action.type){
     case FETCHED_PROJECTS:
@@ -32,6 +46,8 @@ const projectsReducers = (oldState=[], action) => {
 
 const rootReducer = combineReducers({
   searchText: searchTextReducer,
+  currentUser: currentUsersReducers,
+  newUser: currentUsersReducers,
   users: usersReducers,
   projects: projectsReducers,
 })

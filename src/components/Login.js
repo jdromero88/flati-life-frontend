@@ -1,8 +1,8 @@
 import React from 'react'
-import { Link, Route, Switch, withRouter} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { Button, Form, Divider, Grid, Icon } from 'semantic-ui-react'
-
+import {loginUser} from '../redux/actionCreators'
 class Login extends React.Component {
   state = {
     username: null,
@@ -15,10 +15,13 @@ class Login extends React.Component {
     })
   }
   handleSubmit = e => {
-    console.log(this.state.username, this.state.password)
-    const username = this.state.username
-    const password = this.state.password
+    const userToLogin = {
+      username: this.state.username,
+      password: this.state.password
+    }
     e.preventDefault()
+    this.props.loginUser(userToLogin)
+    // this.props.history.push('/profile')
   }
 
   render() {
@@ -75,5 +78,9 @@ class Login extends React.Component {
     )
   }
 }
+const mapDispatchToProps = dispatch => {
+  return ({loginUser: (user) => dispatch(loginUser(user))})
+}
+const mapStateToProps = store => ({currentUser: store.currentUser})
 
-export default Login
+export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Route, Switch, withRouter} from 'react-router-dom'
+import { Route, Switch, Redirect, withRouter} from 'react-router-dom'
 import { Container } from "semantic-ui-react"
 import {connect} from 'react-redux'
 import {
@@ -18,6 +18,7 @@ import Resources from './components/Resources'
 import Technologies from './components/Technologies'
 import SignUp from './components/SignUp'
 import Login from './components/Login'
+import Profile from './components/Profile'
 
 class App extends Component {
   componentDidMount() {
@@ -32,7 +33,14 @@ class App extends Component {
         <Container>
           <Switch>
             <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/login' render={() => this.props.currentUser ?
+              <Redirect to='/profile' />
+              : <Login />
+            } />
+            <Route exact path='/profile' render={() => this.props.currentUser ?
+              <Profile />
+              : <Redirect to='/login'/>
+            } />
             <Route exact path='/technologies' component={Technologies} />
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
@@ -65,5 +73,5 @@ const mapDispatchToProps = (dispatch) => ({
   fetchingProjects: () => {dispatch(fetchingProjects())}
 })
 
-const mapStateToProps = state => ({projects: state.projects, users: state.users})
+const mapStateToProps = store => ({projects: store.projects, users: store.users, currentUser: store.currentUser})
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

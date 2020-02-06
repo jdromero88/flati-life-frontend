@@ -1,9 +1,12 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import { Link, NavLink } from "react-router-dom"
 import { Menu, Sticky, Image, Icon } from "semantic-ui-react"
 import logo from '../fs-logo.png'
 class Navbar extends React.Component{
-
+  handleLogout = () => {
+    this.props.currentUser = null
+  }
   render(){
     return(
       <Sticky>
@@ -18,13 +21,18 @@ class Navbar extends React.Component{
           <NavLink to='/students' className='item'>Students</NavLink>
           <NavLink to='/resources' className='item'>Resources</NavLink>
           <NavLink to='/technologies' className='item'>Technologies</NavLink>
-          <NavLink to='/login' className='right item'>Login
-            <Icon name='user circle'size='big'/>
-          </NavLink>
+          { this.props.currentUser
+            ? <NavLink to='/logout' className='right item'>Logout
+                <Icon name='log out'size='big'/>
+              </NavLink>
+            : <NavLink to='/login' className='right item'>Login
+                <Icon name='user circle'size='big'/>
+              </NavLink>
+          }
         </Menu>
       </Sticky>
     )
   }
 }
-
-export default Navbar
+const mapStateToProps = store => ({currentUser: store.currentUser})
+export default connect(mapStateToProps, null)(Navbar)
