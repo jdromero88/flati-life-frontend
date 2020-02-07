@@ -1,12 +1,14 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import { Card, Image } from 'semantic-ui-react'
 const StudentCard = props => {
   const user = props.user
+  const currentUser = props.currentUser
   return(
     <React.Fragment>
         <Card
-          as={Link}
+          as={!currentUser ? null : Link}
           to={`/students/${user.id}`}
         >
           <Card.Content>
@@ -23,4 +25,5 @@ const StudentCard = props => {
     </React.Fragment>
   )
 }
-export default StudentCard
+const mapStateToProps = store => ({currentUser: store.currentUser})
+export default connect(mapStateToProps, null)(StudentCard)

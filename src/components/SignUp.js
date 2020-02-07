@@ -8,7 +8,9 @@ import { Button,
   Grid,
   Icon } from 'semantic-ui-react'
 import swal from 'sweetalert'
-const cohortOptions = [
+const cohortOptions =
+
+[
   { key: 'ch2', value: '1', text: 'dc11/14/2019' },
   { key: 'ch1', value: '2', text: 'dc01/24/2020' },
 ]

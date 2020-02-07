@@ -18,22 +18,22 @@ const FooterContent = () => {
               <Grid.Column width={3}>
                 <Header  as='h4' content='Social Media' />
                 <List link>
-                  <List.Item as='a' href='www.facebook.com/FlatironSchool'>Facebook/FlatironSchool</List.Item>
-                  <List.Item as='a' href='www.twitter.com/flatironschool'>Twitter/FlatironSchool</List.Item>
+                  <List.Item as='a' target='_blank' href='https://www.facebook.com/FlatironSchool'>Facebook/FlatironSchool</List.Item>
+                  <List.Item as='a' target='_blank' href='https://www.twitter.com/flatironschool'>Twitter/FlatironSchool</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
                 <Header  as='h4' content='More Links' />
                 <List link >
-                  <List.Item as='a' href='https://medium.com/learn-love-code'>Medium/FlatironSchool</List.Item>
-                  <List.Item as='a' href='https://www.quora.com/topic/Flatiron-School'>Quora/FlatironSchool</List.Item>
+                  <List.Item as='a' target='_blank' href='https://medium.com/learn-love-code'>Medium/FlatironSchool</List.Item>
+                  <List.Item as='a' target='_blank' href='https://www.quora.com/topic/Flatiron-School'>Quora/FlatironSchool</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
                 <Header  as='h4' content='Useful links' />
                 <List link>
-                  <List.Item><a href='www.google.com'>Link One</a></List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
+                  <List.Item as='a' target='_blank' href='https://www.google.com'>Google</List.Item>
+                  <List.Item as='a' target='_blank' >Link Two</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={6}>
