@@ -1,10 +1,13 @@
 import React from 'react'
-
+import ProjectsContainer from '../containers/ProjectsContainer'
+import {Container} from 'semantic-ui-react'
 const Home = () => {
   return(
     <React.Fragment>
-      <h1>Home</h1>
-      <h2>Latest Projects</h2>
+      <Container>
+        <h2>Latest Projects</h2>
+        <ProjectsContainer />
+      </Container>
     </React.Fragment>
   )
 }

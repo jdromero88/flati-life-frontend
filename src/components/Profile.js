@@ -46,50 +46,49 @@ class Profile extends React.Component {
           <Image src={this.props.currentUser.avatar} size='small' />
           <h1>Name: {this.props.currentUser.username}</h1>
           <h2>All users details goes here</h2>
-          <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
-            <Modal.Header>Create Project</Modal.Header>
-            <Modal.Content image>
-              <Image wrapped size='medium' src='/images/avatar/large/rachel.png' />
-              <Modal.Description>
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Input
-                  name='name'
-                  placeholder='Project name...'
-                  control='input'
-                  type='text'
-                  onChange={this.handleChange}
-                  required
-                />
-                <Form.Input
-                  name='description'
-                  placeholder='Description...'
-                  control='input'
-                  type='text'
-                  onChange={this.handleChange}
-                  required
-                />
-                <Form.Input
-                  name='image'
-                  placeholder='Project Logo url...'
-                  control='input'
-                  type='text'
-                  onChange={this.handleChange}
-                  required
-                />
-                <Form.Input
-                  name='repository_url'
-                  placeholder='Repository URL...'
-                  control='input'
-                  type='text'
-                  onChange={this.handleChange}
-                  required
-                />
-                <Button type='submit'>Create</Button>
-              </Form>
-              </Modal.Description>
-            </Modal.Content>
-          </Modal>
         </Container>
+        <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
+          <Modal.Header>Create Project</Modal.Header>
+          <Modal.Content image>
+            <Image wrapped size='small' src={this.state.image} />
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Input
+                name='name'
+                placeholder='Project name...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Form.Input
+                name='description'
+                placeholder='Description...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Form.Input
+                name='image'
+                placeholder='Project Logo url...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Form.Input
+                name='repository_url'
+                placeholder='Repository URL...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Button type='submit'>Create</Button>
+            </Form>
+
+          </Modal.Content>
+        </Modal>
       </React.Fragment>
     )
   }

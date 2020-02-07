@@ -7,7 +7,7 @@ import { Button,
   Divider,
   Grid,
   Icon } from 'semantic-ui-react'
-
+import swal from 'sweetalert'
 const cohortOptions = [
   { key: 'ch2', value: '1', text: 'dc11/14/2019' },
   { key: 'ch1', value: '2', text: 'dc01/24/2020' },
@@ -24,7 +24,7 @@ class SignUp extends React.Component{
     password: '',
     email: '',
     pronouns: '',
-    avatar: '',
+    avatar: 'https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png',
     bio: '',
     fav_language: '',
     course_name: '',
@@ -64,8 +64,12 @@ class SignUp extends React.Component{
       before_flatiron: this.state.before_flatiron,
     }
     e.preventDefault()
-    this.props.createUser(newUser)
-    this.props.history.push('/login')
+    if(this.props.createUser(newUser)){
+      swal(`Welcome ${this.state.username}!`, "You are ready to go!", "success")
+      this.closeModal()
+    }else {
+      swal("Sorry", "Username already taken.", "warning")
+    }
   }
 
 
@@ -83,6 +87,7 @@ class SignUp extends React.Component{
               control='input'
               type='text'
               onChange={this.handleChange}
+              required
             />
             <Form.Input
               name='last_name'
@@ -90,6 +95,7 @@ class SignUp extends React.Component{
               control='input'
               type='text'
               onChange={this.handleChange}
+              required
             />
             <Form.Input
               name='username'
@@ -120,6 +126,7 @@ class SignUp extends React.Component{
               selection
               onChange={this.handleCourseSelection}
               options={courseName}
+              required
             />
             <Form.Input
               placeholder='Current job...'
@@ -141,9 +148,10 @@ class SignUp extends React.Component{
               options={cohortOptions}
               onChange={this.handleCohortSelection}
               value={value}
+              required
             />
             <Form.Field>
-              <Checkbox label='I agree to the Terms and Conditions' required/>
+              <Checkbox label='I agree to the Terms and Conditions'/>
             </Form.Field>
             <Button type='submit'>Create Account</Button>
           </Form>

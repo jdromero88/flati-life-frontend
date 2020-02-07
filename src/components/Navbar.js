@@ -3,9 +3,11 @@ import {connect} from 'react-redux'
 import { Link, NavLink } from "react-router-dom"
 import { Menu, Sticky, Image, Icon } from "semantic-ui-react"
 import logo from '../fs-logo.png'
+import {logout} from '../redux/actionCreators'
 class Navbar extends React.Component{
   handleLogout = () => {
-    this.props.currentUser = null
+    const currentUser = null
+    this.props.logout(currentUser)
   }
   render(){
     return(
@@ -28,9 +30,9 @@ class Navbar extends React.Component{
               </NavLink>
             }
             { this.props.currentUser
-              ? <NavLink to='/logout' className='item'>
+              ? <Menu.Item onClick={this.handleLogout}>
                 <Icon name='log out'size='big'/>
-              </NavLink>
+              </Menu.Item>
               : <NavLink to='/login' className='item'>Login
                 <Icon name='user circle'size='big'/>
               </NavLink>
@@ -42,5 +44,8 @@ class Navbar extends React.Component{
     )
   }
 }
+const mapDispatchToProps = dispatch => {
+  return ({logout: (currentUser) => dispatch(logout(currentUser))})
+}
 const mapStateToProps = store => ({currentUser: store.currentUser})
-export default connect(mapStateToProps, null)(Navbar)
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

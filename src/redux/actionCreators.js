@@ -1,6 +1,7 @@
 import { SEARCH_TEXT,
   LOADING,
   LOGIN,
+  LOGOUT,
   CREATE_USER,
   FETCHED_USERS,
   FETCHED_PROJECTS,
@@ -21,6 +22,7 @@ function onSearch(searchText) {
 function login(user) {
   return {type: LOGIN, payload: user}
 }
+
 function loginUser(user) {
   return dispatch => {
     const confObj = {
@@ -43,6 +45,10 @@ function loginUser(user) {
       }
     })
   }
+}
+
+function logout(user) {
+  return {type: LOGOUT, payload:user}
 }
 
 function createdUser(user) {
@@ -169,4 +175,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser, createTechnology, fetchingTechnologies, createProject}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject}

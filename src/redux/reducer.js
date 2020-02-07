@@ -1,6 +1,7 @@
 import {combineReducers} from 'redux'
 import {SEARCH_TEXT,
   LOGIN,
+  LOGOUT,
   CREATE_USER,
   FETCHED_USERS,
   FETCHED_PROJECTS,
@@ -32,6 +33,8 @@ const currentUsersReducers = (oldState=null, action) => {
     case LOGIN:
       return action.payload
     case CREATE_USER:
+      return action.payload
+    case LOGOUT:
       return action.payload
     default:
       return oldState

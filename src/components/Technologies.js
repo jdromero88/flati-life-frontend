@@ -44,7 +44,6 @@ class Technologies extends React.Component {
     return(
       <React.Fragment>
         <Divider hidden/>
-        <h2>Technologies List</h2>
         {!this.props.currentUser ? null
           : <Button
             onClick={this.openModal}
