@@ -16,36 +16,30 @@ const FooterContent = () => {
           <Container textAlign='center'>
             <Grid divided  stackable>
               <Grid.Column width={3}>
-                <Header  as='h4' content='Group 1' />
-                <List link >
-                  <List.Item as='a'>Link One</List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
+                <Header  as='h4' content='Social Media' />
+                <List link>
+                  <List.Item as='a' href='www.facebook.com/FlatironSchool'>Facebook/FlatironSchool</List.Item>
+                  <List.Item as='a' href='www.twitter.com/flatironschool'>Twitter/FlatironSchool</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Header  as='h4' content='Group 2' />
+                <Header  as='h4' content='More Links' />
                 <List link >
-                  <List.Item as='a'>Link One</List.Item>
-                  <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
+                  <List.Item as='a' href='https://medium.com/learn-love-code'>Medium/FlatironSchool</List.Item>
+                  <List.Item as='a' href='https://www.quora.com/topic/Flatiron-School'>Quora/FlatironSchool</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={3}>
-                <Header  as='h4' content='Group 3' />
-                <List link >
-                  <List.Item as='a'>Link One</List.Item>
+                <Header  as='h4' content='Useful links' />
+                <List link>
+                  <List.Item><a href='www.google.com'>Link One</a></List.Item>
                   <List.Item as='a'>Link Two</List.Item>
-                  <List.Item as='a'>Link Three</List.Item>
-                  <List.Item as='a'>Link Four</List.Item>
                 </List>
               </Grid.Column>
-              <Grid.Column width={7}>
-                <Header as='h4' content='Footer Header' />
+              <Grid.Column width={6}>
+                <Header as='h4' content='\\FlatiLife' />
                 <p>
-                  Extra space for a call to action inside the footer that could help re-engage users.
+                  The website to help keep track of your projects and classmates projects.
                 </p>
               </Grid.Column>
             </Grid>
@@ -53,9 +47,6 @@ const FooterContent = () => {
             <Divider section />
             <Image centered size='tiny' src={logo} />
             <List horizontal divided link size='small'>
-              <List.Item as='a' href='#'>
-                Site Map
-              </List.Item>
               <List.Item as='a' href='#'>
                 Contact Us
               </List.Item>
