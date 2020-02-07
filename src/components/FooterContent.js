@@ -39,7 +39,7 @@ const FooterContent = () => {
               <Grid.Column width={6}>
                 <Header as='h4' content='\\FlatiLife' />
                 <p>
-                  The website to help keep track of your projects and classmates projects.
+                  Social Network for Flatiron Students curating projects and student experiences which aims to help new students survive bootcamp.
                 </p>
               </Grid.Column>
             </Grid>

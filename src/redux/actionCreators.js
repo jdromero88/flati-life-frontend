@@ -122,7 +122,7 @@ function createTechnology(newTechnology) {
 function createdProject(project) {
   return {type: CREATE_PROJECT, payload:project}
 }
-function createProject(newProject) {
+function createProject(newProject, user) {
   return dispatch => {
     const confObj = {
       method: 'POST',
@@ -130,7 +130,7 @@ function createProject(newProject) {
         "Content-Type": "application/json",
         "Accept": 'application/json'
       },
-      body: JSON.stringify({project: newProject})
+      body: JSON.stringify({project: newProject, user: user})
     }
     dispatch(loading())
     fetch(PROJECTS_URL, confObj)

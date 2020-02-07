@@ -10,7 +10,14 @@ const ProjectsContainer = props => {
       <SearchBar />
       <Divider />
       <Card.Group itemsPerRow={3} fluid>
-        {
+        { props.home ?
+          props.projects.map(project =>
+            <ProjectCard
+            key={project.id}
+            project={project}
+            />
+          ).slice(0,10)
+          :
           props.projects.map(project =>
             <ProjectCard
             key={project.id}

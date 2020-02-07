@@ -32,8 +32,8 @@ class Profile extends React.Component {
       image: this.state.image,
       repository_url: this.state.repository_url,
     }
-    this.props.createProject(newProject)
-    swal(`Technology ${this.state.name} created!`, "Done!", "success")
+    this.props.createProject(newProject, this.props.currentUser)
+    swal(`Project ${this.state.name} created!`, "Done!", "success")
     this.closeModal()
   }
   render(){
@@ -94,7 +94,7 @@ class Profile extends React.Component {
   }
 }
 const mapDispatchToProps = dispatch => {
-  return ({createProject: (project) => dispatch(createProject(project))})
+  return ({createProject: (project, currentUser) => dispatch(createProject(project, currentUser))})
 }
 const mapStateToProps = store => ({currentUser: store.currentUser})
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

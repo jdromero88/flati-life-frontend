@@ -21,6 +21,7 @@ import SignUp from './components/SignUp'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import AddTechnology from './components/AddTechnology'
+import TechnologyDetails from './components/TechnologyDetails'
 
 class App extends Component {
   componentDidMount() {
@@ -64,6 +65,12 @@ class App extends Component {
                 return <ProjectDetails project={currentProject} />
               }
             } />
+            <Route exact path='/technologies/:id' render={() => {
+                const technologyID = parseInt(window.location.href.split('/').pop())
+                const currentTechnology = this.props.technologies.find(technology => technology.id === technologyID)
+                return <TechnologyDetails technology={currentTechnology}/>
+              }
+            }/>
             <Route exact path='/add-technology' render={() => this.props.currentUser ?
               <AddTechnology />
               : <Redirect to='/login' />
@@ -82,5 +89,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 })
 
-const mapStateToProps = store => ({projects: store.projects, users: store.users, currentUser: store.currentUser})
+const mapStateToProps = store => ({projects: store.projects,
+  users: store.users,
+  currentUser: store.currentUser,
+  technologies: store.technologies
+})
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

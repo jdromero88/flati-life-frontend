@@ -23,6 +23,10 @@ const usersReducers = (oldState=[], action) => {
   switch(action.type){
     case FETCHED_USERS:
       return action.payload
+    case CREATE_USER:
+      debugger
+      const newUser = action.payload
+      return [...oldState, newUser]
     default:
       return oldState
   }
@@ -31,8 +35,6 @@ const usersReducers = (oldState=[], action) => {
 const currentUsersReducers = (oldState=null, action) => {
   switch(action.type){
     case LOGIN:
-      return action.payload
-    case CREATE_USER:
       return action.payload
     case LOGOUT:
       return action.payload
@@ -63,8 +65,6 @@ const technologiesReducer = (oldState=[], action) => {
       return oldState
   }
 }
-
-
 
 const rootReducer = combineReducers({
   searchText: searchTextReducer,
