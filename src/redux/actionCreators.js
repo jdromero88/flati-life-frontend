@@ -6,6 +6,7 @@ import { SEARCH_TEXT,
   FETCHED_PROJECTS,
   CREATE_TECHNOLOGY,
   FETCHED_TECHNOLOGY,
+  CREATE_PROJECT,
 } from './actionType'
 
 const USER_URL = 'http://localhost:3000/users'
@@ -112,6 +113,30 @@ function createTechnology(newTechnology) {
     .catch(err => console.warn(err))
   }
 }
+function createdProject(project) {
+  return {type: CREATE_PROJECT, payload:project}
+}
+function createProject(newProject) {
+  return dispatch => {
+    const confObj = {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({project: newProject})
+    }
+    dispatch(loading())
+    fetch(PROJECTS_URL, confObj)
+    .then(res => res.json())
+    .then(newProject => {
+      newProject ?
+        dispatch(createdProject(newProject))
+      : alert('Something went wrong')
+    })
+    .catch(err => console.warn(err))
+  }
+}
 function fetchedTechnologies(technologiesArray) {
   return {type: FETCHED_TECHNOLOGY, payload: technologiesArray}
 }
@@ -144,4 +169,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser, createTechnology, fetchingTechnologies}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, createUser, createTechnology, fetchingTechnologies, createProject}

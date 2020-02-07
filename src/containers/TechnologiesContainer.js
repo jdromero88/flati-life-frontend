@@ -19,7 +19,9 @@ const TechnologiesContainer = props => {
     </React.Fragment>
   )
 }
-const mapStateToProps = store => ({technologies:
+const mapStateToProps = store => {
+  return ({ technologies:
   store.technologies.filter(technology => technology.name.toLowerCase().includes(store.searchText.toLowerCase()))
-})
+  })
+}
 export default connect(mapStateToProps)(TechnologiesContainer)

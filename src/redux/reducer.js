@@ -6,6 +6,7 @@ import {SEARCH_TEXT,
   FETCHED_PROJECTS,
   CREATE_TECHNOLOGY,
   FETCHED_TECHNOLOGY,
+  CREATE_PROJECT,
 } from './actionType'
 
 const searchTextReducer = (oldState='', action) => {
@@ -41,6 +42,9 @@ const projectsReducers = (oldState=[], action) => {
   switch(action.type){
     case FETCHED_PROJECTS:
       return action.payload
+    case CREATE_PROJECT:
+      const newProject = action.payload
+      return [...oldState, newProject]
     default:
       return oldState
   }
@@ -48,8 +52,8 @@ const projectsReducers = (oldState=[], action) => {
 const technologiesReducer = (oldState=[], action) => {
   switch (action.type) {
     case CREATE_TECHNOLOGY:
-      oldState.push(action.payload)
-      return oldState
+      const newTechnology = action.payload
+      return [...oldState, newTechnology]
     case FETCHED_TECHNOLOGY:
       return action.payload
     default:

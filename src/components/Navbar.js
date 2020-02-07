@@ -19,17 +19,25 @@ class Navbar extends React.Component{
           <NavLink to='/' className='item'>Home</NavLink>
           <NavLink to='/projects' className='item'>Projects</NavLink>
           <NavLink to='/students' className='item'>Students</NavLink>
-          <NavLink to='/resources' className='item'>Resources</NavLink>
+          {/*<NavLink to='/resources' className='item'>Resources</NavLink>*/}
           <NavLink to='/technologies' className='item'>Technologies</NavLink>
-          { this.props.currentUser
-            ? <NavLink to='/logout' className='right item'>Logout
+          <Menu.Menu position='right'>
+            { !this.props.currentUser ? null
+              : <NavLink to='/profile' className='item'>
+              <Icon name='user circle'size='big'/>
+              </NavLink>
+            }
+            { this.props.currentUser
+              ? <NavLink to='/logout' className='item'>
                 <Icon name='log out'size='big'/>
               </NavLink>
-            : <NavLink to='/login' className='right item'>Login
+              : <NavLink to='/login' className='item'>Login
                 <Icon name='user circle'size='big'/>
               </NavLink>
-          }
+            }
+          </Menu.Menu>
         </Menu>
+
       </Sticky>
     )
   }

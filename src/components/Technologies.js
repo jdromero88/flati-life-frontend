@@ -9,14 +9,18 @@ import { Button,
   Image,
   Header,
   Form,
-  Grid
   } from 'semantic-ui-react'
+import swal from 'sweetalert'
 class Technologies extends React.Component {
   state = {
     name: '',
     description: '',
     website:'',
+    modalIsOpen: false
   }
+  openModal = () => this.setState({ modalIsOpen: true })
+  closeModal = () => this.setState({ modalIsOpen: false })
+
   handleChange = e => {
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value
@@ -30,18 +34,26 @@ class Technologies extends React.Component {
     }
     e.preventDefault()
     this.props.createTechnology(newTechnology)
+    swal(`Technology ${this.state.name} created!`, "Done!", "success")
+    this.closeModal()
     // this.props.history.push('/technologies')
-    // debugger
-    return <Redirect to='/technologies' />
+
   }
   render(){
+    const {modalIsOpen} = this.state
     return(
       <React.Fragment>
         <Divider hidden/>
         <h2>Technologies List</h2>
-        <Modal trigger={!this.props.currentUser ? null :<Button label='Add Technology'/>}>
+        {!this.props.currentUser ? null
+          : <Button
+            onClick={this.openModal}
+            label='Add Technology'
+            />
+        }
+        <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
+        <Modal.Header>Add Technology</Modal.Header>
           <Modal.Content>
-
             <Form onSubmit={this.handleSubmit}>
               <Form.Input
                 name='name'
@@ -83,9 +95,3 @@ const mapDispatchToProps = dispatch => {
 }
 const mapStateToProps = store => ({currentUser: store.currentUser})
 export default connect(mapStateToProps, mapDispatchToProps)(Technologies)
-
-// <Button
-//   as={Link}
-//   to={'/add-technology'}
-//   label='Add Technology'
-// />
