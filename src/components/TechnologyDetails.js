@@ -6,6 +6,7 @@ const TechnologyDetails = props => {
   return !technology ? null : (
     <React.Fragment>
         <Container>
+          <Image />
           <h1>Project Name: {technology.name}</h1>
           <h2>Description:</h2>
           <p>{technology.description}</p>

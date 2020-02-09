@@ -3,6 +3,7 @@ import { Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { Button, Form, Divider, Grid, Icon } from 'semantic-ui-react'
 import {loginUser} from '../redux/actionCreators'
+import { FaBeer } from 'react-icons/fa';
 class Login extends React.Component {
   state = {
     username: null,
@@ -31,6 +32,7 @@ class Login extends React.Component {
          <Grid centered columns={1}>
           <Form onSubmit={this.handleSubmit}>
               <Icon name='user circle'size='huge'/>
+              <FaBeer size={56}/>
               <Form.Input
                 name='username'
                 label='Username:'

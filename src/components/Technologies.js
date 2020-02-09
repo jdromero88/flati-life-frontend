@@ -1,13 +1,10 @@
 import React from 'react'
-import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {createTechnology} from '../redux/actionCreators'
 import TechnologiesContainer from '../containers/TechnologiesContainer'
 import { Button,
   Divider,
   Modal,
-  Image,
-  Header,
   Form,
   } from 'semantic-ui-react'
 import swal from 'sweetalert'

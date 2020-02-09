@@ -5,10 +5,8 @@ import {createProject} from '../redux/actionCreators'
 import {Container, Modal,
 Form, Button,
 Image, Divider,
-Icon, Menu,
-List, Grid} from 'semantic-ui-react'
+Icon, Menu, Grid} from 'semantic-ui-react'
 import swal from 'sweetalert'
-import _ from 'lodash'
 class Profile extends React.Component {
   state = {
     name: '',
@@ -23,7 +21,15 @@ class Profile extends React.Component {
   }
 
   openModal = () => this.setState({ modalIsOpen: true })
-  closeModal = () => this.setState({ modalIsOpen: false })
+  closeModal = () => this.setState({ modalIsOpen: false,
+    name: '',
+    description: '',
+    image: '',
+    repository_url: '',
+    collaborator_id: null,
+    technologiesSelected: [],
+    inputLinkClicked: false
+  })
   openModalProfile = () => this.setState({ modalProfileIsOpen: true })
   closeModalProfile = () => this.setState({ modalProfileIsOpen: false })
 

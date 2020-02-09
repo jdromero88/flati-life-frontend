@@ -10,8 +10,6 @@ import { SEARCH_TEXT,
   CREATE_PROJECT,
   FETCHED_COHORTS,
 } from './actionType'
-import React from 'react'
-import { Redirect } from 'react-router-dom'
 import swal from 'sweetalert'
 
 const USER_URL = 'http://localhost:3000/users'
@@ -66,7 +64,10 @@ function loginUser(user) {
       if (currentUser.message !== 'Incorrect username or password!'){
         dispatch(login(currentUser))
       }else {
-        alert('Wrong username or password')
+        swal({
+          text:'Incorrect username or password!',
+          icon:'warning'
+        })
         dispatch(login(null))
       }
     })

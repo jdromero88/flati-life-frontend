@@ -1,16 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Redirect, withRouter} from 'react-router-dom'
+import { withRouter} from 'react-router-dom'
 import {createTechnology} from '../redux/actionCreators'
 import { Button,
-  Checkbox,
   Form,
   Divider,
   Grid,
-  Icon,
-  Modal,
-  Image,
-  Header} from 'semantic-ui-react'
+  } from 'semantic-ui-react'
   import swal from 'sweetalert'
 class AddTechnology extends React.Component {
   state = {

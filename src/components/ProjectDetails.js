@@ -19,7 +19,7 @@ const ProjectDetails = props => {
           <List.Item>
             <List.Icon name='linkify' />
             <List.Content>
-              <a href={project.repository_url} target='_blank'>{project.repository_url}</a>
+              <a href={project.repository_url}  target='_blank' rel="noreferrer noopener">{project.repository_url}</a>
             </List.Content>
           </List.Item>
           </List>
