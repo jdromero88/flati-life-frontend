@@ -25,6 +25,7 @@ class Login extends React.Component {
     current_job: '',
     cohort_id: '',
     before_flatiron: '',
+    terms: false,
   }
 
   handleOpen = (dimmer) => () => this.setState({dimmer, modalOpen: !this.state.modalOpen })
@@ -32,6 +33,9 @@ class Login extends React.Component {
   this.resetSubmitNewUserStates()
   }
 
+  handleChangeCheckbox = () => this.setState({
+    terms: !this.state.terms
+  })
   handleChange = e => {
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value
@@ -128,16 +132,11 @@ class Login extends React.Component {
                 placeholder='Password...'
                 onChange={this.handleChange}
               />
+              <Button
+                disabled={this.state.username && this.state.password ? false : true}
+                type='submit'
+              >Login</Button>
 
-              { this.state.username && this.state.password
-                ? <Button
-                  type='submit'
-                  >Login</Button>
-                : <Button
-                  disabled
-                  type='submit'
-                >Login</Button>
-              }
 
             <Divider />
 
@@ -229,9 +228,14 @@ class Login extends React.Component {
               required
             />
             <Form.Field>
-              <Checkbox label='I agree to the Terms and Conditions'/>
+              <Checkbox label='I agree to the Terms and Conditions'
+              checked={this.state.terms}
+              onChange={this.handleChangeCheckbox}
+              />
             </Form.Field>
-            <Button type='submit'>Create Account</Button>
+            <Button type='submit'
+            disabled={this.state.terms ? false : true}
+            >Create Account</Button>
           </Form>
           </Modal.Content>
         </Modal>

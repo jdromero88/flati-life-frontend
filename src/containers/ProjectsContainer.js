@@ -7,7 +7,10 @@ import SearchBar from '../components/SearchBar'
 const ProjectsContainer = props => {
   return(
     <React.Fragment>
-      <SearchBar />
+      {
+        props.home ? null
+        : <SearchBar />
+      }
       <Divider />
       <Card.Group itemsPerRow={3} fluid='true'>
         { props.home ?

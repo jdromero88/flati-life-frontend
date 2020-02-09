@@ -1,12 +1,19 @@
 import React from 'react'
 import ProjectsContainer from '../containers/ProjectsContainer'
-import {Container} from 'semantic-ui-react'
+import {Container, Divider, Header, Segment} from 'semantic-ui-react'
 const Home = () => {
   const home = true
   return(
     <React.Fragment>
+      <Divider hidden />
       <Container>
-        <h2>Latest Projects</h2>
+      <Header as='h2' attached='top'>
+        Welcome to //FlatiLife
+      </Header>
+      <Segment attached>
+        Here go some welcome message to the website!
+      </Segment>
+        <Header as='h2'>Latest Projects</Header>
         <ProjectsContainer home={home}/>
       </Container>
     </React.Fragment>
