@@ -5,9 +5,10 @@ import {createProject} from '../redux/actionCreators'
 import {Container, Modal,
 Form, Button,
 Image, Divider,
-Icon, Menu,} from 'semantic-ui-react'
+Icon, Menu,
+List, Grid} from 'semantic-ui-react'
 import swal from 'sweetalert'
-
+import _ from 'lodash'
 class Profile extends React.Component {
   state = {
     name: '',
@@ -16,7 +17,9 @@ class Profile extends React.Component {
     repository_url: '',
     modalIsOpen: false,
     modalProfileIsOpen: false,
-    user_id: null,
+    collaborator_id: null,
+    technologiesSelected: [],
+    inputLinkClicked: false
   }
 
   openModal = () => this.setState({ modalIsOpen: true })
@@ -29,7 +32,29 @@ class Profile extends React.Component {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
+  handleSelect = (e, data) => {
+    const value = parseInt(data.value)
+    if(this.state.technologiesSelected.length !== 0){
+      const foundIndex = this.state.technologiesSelected.findIndex(arr => arr === value)
+      if(foundIndex !== -1){
+        swal({
+          text:'Technology already added.',
+          icon:'warning'
+        })
+      }else{
+        this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
+          inputLinkClicked: true})
+        }
+    }else {
+      this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
+        inputLinkClicked: true})
+    }
 
+
+  }
+  handleUserSelection = (e, {value}) => {
+    this.setState({ collaborator_id: value })
+  }
   handleSubmit = e => {
     const newProject = {
       name: this.state.name,
@@ -37,18 +62,40 @@ class Profile extends React.Component {
       image: this.state.image,
       repository_url: this.state.repository_url,
     }
-    this.props.createProject(newProject, this.props.currentUser)
+    this.props.createProject(newProject, this.props.currentUser.id, this.state.collaborator_id, this.state.technologiesSelected)
     swal(`Project ${this.state.name} created!`, "Done!", "success")
+    this.setState({
+      name: '',
+      description: '',
+      image: '',
+      repository_url: '',
+      modalIsOpen: false,
+      modalProfileIsOpen: false,
+      collaborator_id: null,
+      technologiesSelected: [],
+      inputLinkClicked: false
+    })
     this.closeModal()
   }
 
-  usersOptions = this.props.users.filter(user => user.id !== this.props.currentUser.id).map( user => ({key: user.id, value: user.username, text: user.username}))
+  usersOptions = this.props.users.filter(user => user.id !== this.props.currentUser.id).map( user => ({key: user.id, value: user.id, text: user.username}))
+
+  tehcnologyOptions = this.props.technologies.map((technology, index) => ({
+      key: technology.id,
+      text: technology.name,
+      value: technology.id,
+    })
+  )
   handleUserSelection = (e, {value}) => {
-    this.setState({ user_id: value })
+    this.setState({ collaborator_id: value })
+  }
+
+  userProjects = () => {
+    this.props.projects.map(project => project.users.filter(user => user.id === this.props.currentUser.id))
   }
 
   render(){
-    const {modalIsOpen, modalProfileIsOpen, userValue} = this.state
+    const {modalIsOpen, modalProfileIsOpen, value, data=[]} = this.state
     return !this.props.currentUser ? null : (
       <React.Fragment>
         <Container>
@@ -73,6 +120,8 @@ class Profile extends React.Component {
           <Image src={this.props.currentUser.avatar} size='small' />
           <h1>Name: {this.props.currentUser.username}</h1>
           <h2>All users details goes here</h2>
+
+
         </Container>
 
         {/*Modal to edit Profile*/}
@@ -121,53 +170,64 @@ class Profile extends React.Component {
         <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
           <Modal.Header>Create Project</Modal.Header>
           <Modal.Content image>
-            <Image wrapped size='small' src={this.state.image} />
-            <Form onSubmit={this.handleSubmit}>
-              <Form.Input
-                name='name'
-                placeholder='Project name...'
-                control='input'
-                type='text'
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                name='description'
-                placeholder='Description...'
-                control='input'
-                type='text'
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                name='image'
-                placeholder='Project Logo url...'
-                control='input'
-                type='text'
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                name='repository_url'
-                placeholder='Repository URL...'
-                control='input'
-                type='text'
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Dropdown
-                placeholder='Select User'
-                fluid
-                search
-                selection
-                name='user_id'
-                options={this.usersOptions}
-                onChange={this.handleUserSelection}
-                value={userValue}
-                required
-              />
-              <Button type='submit'>Create</Button>
-            </Form>
+            <Grid centered columns={3}>
+                <Image wrapped size='small' src={this.state.image} />
+              <Form onSubmit={this.handleSubmit}>
+                <Form.Input
+                  name='name'
+                  placeholder='Project name...'
+                  control='input'
+                  type='text'
+                  onChange={this.handleChange}
+                  required
+                />
+                <Form.Input
+                  name='description'
+                  placeholder='Description...'
+                  control='input'
+                  type='text'
+                  onChange={this.handleChange}
+                  required
+                />
+                <Form.Input
+                  name='image'
+                  placeholder='Project Logo url...'
+                  control='input'
+                  type='text'
+                  onChange={this.handleChange}
+                  required
+                />
+                <Form.Input
+                  name='repository_url'
+                  placeholder='Repository URL...'
+                  control='input'
+                  type='text'
+                  onChange={this.handleChange}
+                  required
+                />
+                <Form.Dropdown
+                  placeholder='Select User'
+                  fluid
+                  search
+                  selection
+                  name='collaborator_id'
+                  options={this.usersOptions}
+                  onChange={this.handleUserSelection}
+                  value={value}
+                  required
+                />
+                <Form.Dropdown
+                  placeholder='Technologies'
+                  name='technologiesSelected'
+                  fluid multiple selection search
+                  options={this.tehcnologyOptions}
+                  onChange={this.handleSelect}
+                  value={data}
+                  required
+                />
+                <Button type='submit'>Create</Button>
+              </Form>
+            </Grid>
           </Modal.Content>
         </Modal>
       </React.Fragment>
@@ -175,8 +235,11 @@ class Profile extends React.Component {
   }
 }
 const mapDispatchToProps = dispatch => {
-  return ({createProject: (project, currentUser) => dispatch(createProject(project, currentUser))})
+  return ({createProject: (project, currentUser, collaborator, technologies) => dispatch(createProject(project, currentUser, collaborator, technologies ))})
 }
 const mapStateToProps = store => ({currentUser: store.currentUser,
-users: store.users})
+users: store.users,
+projects: store.projects,
+technologies: store.technologies,
+})
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile))

@@ -5,7 +5,8 @@ import {connect} from 'react-redux'
 import {
   fetchingUsers,
   fetchingProjects,
-  fetchingTechnologies
+  fetchingTechnologies,
+  fetchingCohorts,
 } from './redux/actionCreators'
 import './App.css'
 import Header from './containers/Header'
@@ -25,9 +26,10 @@ import TechnologyDetails from './components/TechnologyDetails'
 
 class App extends Component {
   componentDidMount() {
-    this.props.fetchingUsers()
     this.props.fetchingProjects()
     this.props.fetchingTechnologies()
+    this.props.fetchingUsers()
+    this.props.fetchingCohorts()
   }
 
   render(){
@@ -36,7 +38,7 @@ class App extends Component {
         <Header />
         <Container>
           <Switch>
-            <Route exact path='/signup' component={SignUp} />
+            <Route exact path='/signup' component= {SignUp}/>
             <Route exact path='/login' render={() => this.props.currentUser ?
               <Redirect to='/profile' />
               : <Login />
@@ -48,10 +50,11 @@ class App extends Component {
             <Route exact path='/technologies' component={Technologies} />
             <Route exact path='/resources' component={Resources} />
             <Route exact path='/students' component={Students} />
-            <Route exact path='/students/:id' render={() => {
-                const studentID = parseInt(window.location.href.split('/').pop())
+            <Route exact path='/students/:id' render={() =>
+                {const studentID = parseInt(window.location.href.split('/').pop())
                 const currentStudent = this.props.users.find(student => student.id === studentID)
-                return <StudentDetails student={currentStudent}/>
+                return this.props.currentUser ? <StudentDetails student={currentStudent}/>
+                : <Redirect to='/students'/>
               }
             }/>
             <Route exact path='/projects' component={Projects} />
@@ -86,12 +89,13 @@ const mapDispatchToProps = (dispatch) => ({
   fetchingUsers: () => {dispatch(fetchingUsers())},
   fetchingProjects: () => {dispatch(fetchingProjects())},
   fetchingTechnologies: () => {dispatch(fetchingTechnologies())},
-
+  fetchingCohorts: () => {dispatch(fetchingCohorts())},
 })
 
 const mapStateToProps = store => ({projects: store.projects,
   users: store.users,
   currentUser: store.currentUser,
-  technologies: store.technologies
+  technologies: store.technologies,
+  cohorts: store.cohorts,
 })
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))

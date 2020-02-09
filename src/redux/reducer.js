@@ -8,6 +8,7 @@ import {SEARCH_TEXT,
   CREATE_TECHNOLOGY,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
+  FETCHED_COHORTS,
 } from './actionType'
 
 const searchTextReducer = (oldState='', action) => {
@@ -24,7 +25,7 @@ const usersReducers = (oldState=[], action) => {
     case FETCHED_USERS:
       return action.payload
     case CREATE_USER:
-      debugger
+      // debugger
       const newUser = action.payload
       return [...oldState, newUser]
     default:
@@ -54,6 +55,16 @@ const projectsReducers = (oldState=[], action) => {
       return oldState
   }
 }
+
+const cohortsReducers = (oldState=[], action) => {
+    switch (action.type) {
+      case FETCHED_COHORTS:
+        return action.payload
+      default:
+        return oldState
+    }
+}
+
 const technologiesReducer = (oldState=[], action) => {
   switch (action.type) {
     case CREATE_TECHNOLOGY:
@@ -72,6 +83,7 @@ const rootReducer = combineReducers({
   users: usersReducers,
   projects: projectsReducers,
   technologies: technologiesReducer,
+  cohorts: cohortsReducers,
 })
 
 export default rootReducer

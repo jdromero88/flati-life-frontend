@@ -1,23 +1,23 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {createUser} from '../redux/actionCreators'
+import {createUser,} from '../redux/actionCreators'
+
 import { Button,
   Checkbox,
   Form,
   Divider,
   Grid,
   Icon } from 'semantic-ui-react'
-import swal from 'sweetalert'
-const cohortOptions =
+// import swal from 'sweetalert'
 
-[
-  { key: 'ch2', value: '1', text: 'dc11/14/2019' },
-  { key: 'ch1', value: '2', text: 'dc01/24/2020' },
-]
+// TODO: redirect to login after user is created
+
+
 const courseName = [
   {key: 'se', value:'Software Engineer', text: 'Software Engineer'},
   {key: 'ds', value:'Data Science', text: 'Data Science'},
 ]
+
 class SignUp extends React.Component{
   state = {
     first_name: '',
@@ -34,6 +34,10 @@ class SignUp extends React.Component{
     cohort_id: '',
     before_flatiron: '',
   }
+
+  cohortOptions = this.props.cohorts.map(cohort => ({
+    key: cohort.id, value: cohort.id, text: cohort.name
+  }))
 
   handleChange = e => {
     this.setState({
@@ -66,11 +70,8 @@ class SignUp extends React.Component{
       before_flatiron: this.state.before_flatiron,
     }
     e.preventDefault()
-    if(this.props.createUser(newUser)){
-      swal(`Welcome ${this.state.username}!`, "You are ready to go!", "success")
-      this.closeModal()
-    }else {
-      swal("Sorry", "Username already taken.", "warning")
+    if(!!this.props.createUser(newUser)){
+      this.props.history.push('/login')
     }
   }
 
@@ -94,6 +95,14 @@ class SignUp extends React.Component{
             <Form.Input
               name='last_name'
               placeholder='Last name...'
+              control='input'
+              type='text'
+              onChange={this.handleChange}
+              required
+            />
+            <Form.Input
+              name='email'
+              placeholder='Email'
               control='input'
               type='text'
               onChange={this.handleChange}
@@ -147,7 +156,7 @@ class SignUp extends React.Component{
               search
               selection
               name='cohort_id'
-              options={cohortOptions}
+              options={this.cohortOptions}
               onChange={this.handleCohortSelection}
               value={value}
               required
@@ -162,8 +171,10 @@ class SignUp extends React.Component{
     )
   }
 }
-const mapDispatchToProps = dispatch => {
-  return ({createUser: (user) => dispatch(createUser(user))})
-}
+const mapDispatchToProps = dispatch => ({
+  createUser: (user) => {dispatch(createUser(user))},
+  // fetchingCohorts: () => {dispatch(fetchingCohorts())},
+})
 
-export default connect(null, mapDispatchToProps)(SignUp)
+const mapStateToProps = store => ({cohorts: store.cohorts})
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp)

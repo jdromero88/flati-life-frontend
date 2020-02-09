@@ -8,17 +8,43 @@ import { SEARCH_TEXT,
   CREATE_TECHNOLOGY,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
+  FETCHED_COHORTS,
 } from './actionType'
+import React from 'react'
+import { Redirect } from 'react-router-dom'
+import swal from 'sweetalert'
 
 const USER_URL = 'http://localhost:3000/users'
 const USER_LOGIN_URL = 'http://localhost:3000/users/login'
 const PROJECTS_URL = 'http://localhost:3000/projects'
 const TECHNOLOGIES_URL = 'http://localhost:3000/tech_specifications'
+const COHORTS_URL = 'http://localhost:3000/cohorts'
+
+function loading() {
+  return {type:LOADING}
+}
 
 function onSearch(searchText) {
   return {type: SEARCH_TEXT, payload: searchText}
 }
+// cohort functions
+function fetchedCohort(cohorts) {
+  return{type:FETCHED_COHORTS, payload:cohorts}
+}
+ function fetchingCohorts() {
+  return dispatch => {
+    fetch(COHORTS_URL)
+    .then(res => res.json())
+    .then(cohort => {
+      dispatch(fetchedCohort(cohort))
+    })
+    .catch(err => console.warn(err))
+  }
+ }
+// end cohort functions
 
+
+// User functions
 function login(user) {
   return {type: LOGIN, payload: user}
 }
@@ -62,21 +88,31 @@ function createUser(newUser) {
         "Content-Type": "application/json",
         "Accept": 'application/json'
       },
-      body: JSON.stringify({user: newUser})
+      body: JSON.stringify({user:newUser})
     }
     dispatch(loading())
     fetch(USER_URL, confObj)
     .then(res => res.json())
     .then(newUser => {
-      newUser ?
+      if (!newUser.error){
         dispatch(createdUser(newUser))
-      : alert('Something went wrong')
+        swal({
+          text:`Welcome ${newUser.username}! You are ready to go!`,
+          icon:'success'
+        })
+        return true
+      }else{
+        dispatch(createdUser(null))
+        swal({
+          text:"Sorry, Username already taken.",
+          icon:"warning"
+        })
+        return false
+      }
+
     })
     .catch(err => console.warn(err))
   }
-}
-function loading() {
-  return {type:LOADING}
 }
 
 function fetchedUsers(usersArray) {
@@ -94,6 +130,8 @@ function fetchingUsers() {
     .catch(err => console.warn(err))
   }
 }
+// end User functions
+
 //Technologies
 function createdTechnology(technology) {
   return{type: CREATE_TECHNOLOGY, payload:technology}
@@ -122,7 +160,7 @@ function createTechnology(newTechnology) {
 function createdProject(project) {
   return {type: CREATE_PROJECT, payload:project}
 }
-function createProject(newProject, user) {
+function createProject(newProject, user, collaboratorID=null, technologies=null) {
   return dispatch => {
     const confObj = {
       method: 'POST',
@@ -130,7 +168,7 @@ function createProject(newProject, user) {
         "Content-Type": "application/json",
         "Accept": 'application/json'
       },
-      body: JSON.stringify({project: newProject, user: user})
+      body: JSON.stringify({project: newProject, user: user, collaborator_id: collaboratorID, technologies: technologies})
     }
     dispatch(loading())
     fetch(PROJECTS_URL, confObj)
@@ -153,6 +191,7 @@ function fetchingTechnologies() {
     .then(res => res.json())
     .then(technologiesArray => {
       dispatch(fetchedTechnologies(technologiesArray))
+
     })
     .catch(err => console.warn(err))
   }
@@ -175,4 +214,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, fetchingCohorts}

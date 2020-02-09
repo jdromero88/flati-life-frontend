@@ -1,12 +1,21 @@
 import React from 'react'
 import StudentsContainer from '../containers/StudentsContainer'
-import {Divider} from 'semantic-ui-react'
-const Students = () => {
-  return (
-    <React.Fragment>
-      <Divider hidden/>
-      <StudentsContainer />
-    </React.Fragment>
-  )
+import {Divider, Loader} from 'semantic-ui-react'
+import {connect} from 'react-redux'
+class Students extends React.Component {
+  // debugger
+  render(){
+    return(
+      <React.Fragment>
+        <Divider hidden/>
+        {this.props.users ?
+        <StudentsContainer />
+        : <Loader active content='Loading' />
+        }
+      </React.Fragment>
+    )
+  }
 }
-export default Students
+//reading from state
+const mapStateToProps = store => ({users: store.users})
+export default connect(mapStateToProps, null)(Students)
