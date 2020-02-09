@@ -9,7 +9,7 @@ const ProjectsContainer = props => {
     <React.Fragment>
       <SearchBar />
       <Divider />
-      <Card.Group itemsPerRow={3} fluid>
+      <Card.Group itemsPerRow={3} fluid='true'>
         { props.home ?
           props.projects.map(project =>
             <ProjectCard

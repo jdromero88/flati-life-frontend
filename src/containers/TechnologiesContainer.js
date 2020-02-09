@@ -8,7 +8,7 @@ const TechnologiesContainer = props => {
     <React.Fragment>
       <SearchBar />
       <Divider />
-      <Card.Group itemsPerRow={3} fluid >
+      <Card.Group itemsPerRow={3} fluid='true' >
         {
           props.technologies.map(technology => <TechnologyCard
             key={technology.id}

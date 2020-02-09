@@ -21,7 +21,7 @@ const ProjectCard = props => {
           {project.description}
         </Card.Description>
         <Card.Meta>
-          Repository: <a href={project.repository_url}>{project.repository_url}</a>
+          Repository: {project.repository_url}
         </Card.Meta>
         </Card.Content>
       </Card>

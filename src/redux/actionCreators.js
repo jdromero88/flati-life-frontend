@@ -71,6 +71,7 @@ function loginUser(user) {
         dispatch(login(null))
       }
     })
+    .catch(err => console.warn(err))
   }
 }
 
@@ -101,18 +102,24 @@ function createUser(newUser) {
           text:`Welcome ${newUser.username}! You are ready to go!`,
           icon:'success'
         })
-        return true
+        // return true
       }else{
         dispatch(createdUser(null))
         swal({
           text:"Sorry, Username already taken.",
           icon:"warning"
         })
-        return false
+        // return false
       }
 
     })
-    .catch(err => console.warn(err))
+    .catch(err => {
+      swal({
+        text:'Server is down. Try Later',
+        icon:'error'
+      })
+      console.warn(err)
+    })
   }
 }
 
