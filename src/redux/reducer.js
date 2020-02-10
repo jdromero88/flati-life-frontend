@@ -3,6 +3,7 @@ import {SEARCH_TEXT,
   LOGIN,
   LOGOUT,
   CREATE_USER,
+  SET_CURRENT_USER,
   FETCHED_USERS,
   FETCHED_PROJECTS,
   CREATE_TECHNOLOGY,
@@ -26,8 +27,7 @@ const usersReducers = (oldState=[], action) => {
       return action.payload
     case CREATE_USER:
       // debugger
-      const newUser = action.payload
-      return [...oldState, newUser]
+      return [...oldState, action.payload]
     default:
       return oldState
   }
@@ -37,6 +37,8 @@ const currentUsersReducers = (oldState=null, action) => {
   switch(action.type){
     case LOGIN:
       return action.payload
+    case SET_CURRENT_USER:
+      return {...action.payload}
     case LOGOUT:
       return action.payload
     default:
@@ -49,8 +51,7 @@ const projectsReducers = (oldState=[], action) => {
     case FETCHED_PROJECTS:
       return action.payload
     case CREATE_PROJECT:
-      const newProject = action.payload
-      return [...oldState, newProject]
+      return [...oldState, action.payload]
     default:
       return oldState
   }

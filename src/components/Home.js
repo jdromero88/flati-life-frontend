@@ -8,7 +8,7 @@ const Home = () => {
       <Divider hidden />
       <Container>
       <Header as='h2' attached='top'>
-        Welcome to //FlatiLife
+        Welcome to Flati/Life
       </Header>
       <Segment attached>
         Here go some welcome message to the website!

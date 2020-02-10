@@ -4,10 +4,9 @@ import { withRouter} from 'react-router-dom'
 import {createProject} from '../redux/actionCreators'
 import { Modal,
 Form, Button,
-Image, Divider, Menu,
+Image, Icon,
 Grid, } from 'semantic-ui-react'
 import swal from 'sweetalert'
-import { AiOutlineFolderAdd } from 'react-icons/ai'
 class AddProject extends React.Component {
   state = {
     name: '',
@@ -102,14 +101,14 @@ class AddProject extends React.Component {
     const {modalIsOpen, value, data=[]} = this.state
     return(
       <React.Fragment>
-        <Divider hidden/>
-        <Menu.Item
-          name='gamepad'
-          onClick={this.openModal}
-        >
-        <AiOutlineFolderAdd size={27}/>
-        Project
-        </Menu.Item>
+        <Button animated onClick={this.openModal}>
+        <Button.Content visible>
+          Create Project
+        </Button.Content>
+        <Button.Content hidden>
+          <Icon name='add circle'/>
+        </Button.Content>
+        </Button>
         <Grid centered columns={1}>
         <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
           <Modal.Header>Create Project</Modal.Header>

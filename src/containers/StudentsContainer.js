@@ -13,7 +13,6 @@ class StudentsContainer extends React.Component{
     filterType: 'all',
   }
   handleFilter = (e, {value}) => {
-    console.log(value)
     this.setState({
       filterType: value
     })

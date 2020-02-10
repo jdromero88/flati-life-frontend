@@ -2,9 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {Modal,
 Form, Button,
-Image, Menu} from 'semantic-ui-react'
-import { FaUserEdit } from 'react-icons/fa'
-import {createProject} from '../redux/actionCreators'
+Image, Icon} from 'semantic-ui-react'
+import {updateUser} from '../redux/actionCreators'
 
 const courseName = [
   {key: 'se', value:'Software Engineer', text: 'Software Engineer'},
@@ -12,34 +11,65 @@ const courseName = [
 ]
 class EditProfile extends React.Component {
   state = {
-      first_name: '',
-      last_name: '',
-      username: '',
-      password: '',
-      email: '',
-      pronouns: '',
-      avatar: 'https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png',
-      bio: '',
-      fav_language: '',
-      course_name: '',
-      current_job: '',
-      cohort_id: '',
-      before_flatiron: '',
+      editUser:{
+        first_name: '',
+        last_name: '',
+        username: '',
+        password: '',
+        email: '',
+        pronouns: '',
+        avatar: '',
+        bio: '',
+        fav_language: '',
+        course_name: '',
+        current_job: '',
+        cohort_id: '',
+        before_flatiron: '',
+      },
       modalOpen: false,
   }
-
+  componentDidMount() {
+    this.setState({editUser: this.props.currentUser})
+  }
   openModal = () => this.setState({ modalOpen: !this.state.modalOpen })
-  closeModal = () => this.setState({ modalOpen: !this.state.modalOpen })
+  closeModal = () => {
+    this.setState({ modalOpen: !this.state.modalOpen })
+  }
   handleProfileChange = e => {
     this.setState({
-      [e.currentTarget.name]: e.currentTarget.value
+      editUser: { ...this.state.editUser,
+        [e.currentTarget.name]: e.currentTarget.value
+      }
     })
   }
-  handleLoginSubmit = e => {
-    const{first_name, last_name, username, password, email, pronouns,
+
+  handleCohortSelection = (e, {value}) => {
+    this.setState({ editUser: {
+        ...this.state.editUser,
+        cohort_id: value
+    } })
+  }
+
+  handleCourseSelection = (e, {value}) => {
+    this.setState({ editUser: {
+      ...this.state.editUser,
+      course_name: value
+    } })
+  }
+
+  resetStateForEditUser = () => {
+    this.setState({currentUser:{}})
+  }
+
+  cohortOptions = this.props.cohorts.map(cohort => ({
+    key: cohort.id, value: cohort.id, text: cohort.name
+  }))
+
+  handleSubmit = e => {
+    const{id, first_name, last_name, username, password, email, pronouns,
     avatar, bio, fav_language, course_name,
     current_job, cohort_id,before_flatiron
-    } = this.state
+  } = this.state.editUser
     const user = {
       first_name: first_name,
       last_name: last_name,
@@ -53,36 +83,34 @@ class EditProfile extends React.Component {
       course_name: course_name,
       current_job: current_job,
       cohort_id: cohort_id,
-      before_flatiron: before_flatiron,
+      before_flatiron: before_flatiron
     }
+
     e.preventDefault()
-    this.props.updateUser(user)
+    this.props.updateUser(user, id)
     this.closeModal()
   }
   render(){
     const { modalOpen, value} = this.state
     return(
       <React.Fragment>
-      <Menu.Item
-        name='gamepad'
-        title="Edit Profile"
-        onClick={this.openModal}
-      >
-        <FaUserEdit size={27}/>
-      User
-      </Menu.Item>
+      <Button animated onClick={this.openModal}>
+        <Button.Content visible>Edit</Button.Content>
+        <Button.Content hidden>
+          <Icon name='edit outline'/>
+        </Button.Content>
+      </Button>
       <Modal open={modalOpen} onClose={this.closeModal} closeIcon>
         <Modal.Header>Edit Profile</Modal.Header>
         <Modal.Content image>
           <Image wrapped size='small' src={this.state.image} />
-          <Form onSubmit={this.handleEditProfileSubmit}>
+          <Form onSubmit={this.handleSubmit}>
           <Form.Input
             name='first_name'
             placeholder='First name...'
             control='input'
             type='text'
             onChange={this.handleProfileChange}
-            required
           />
           <Form.Input
             name='last_name'
@@ -90,7 +118,13 @@ class EditProfile extends React.Component {
             control='input'
             type='text'
             onChange={this.handleProfileChange}
-            required
+          />
+          <Form.Input
+            name='pronouns'
+            placeholder='Pronouns e.g.: She|Her...'
+            control='input'
+            type='text'
+            onChange={this.handleProfileChange}
           />
           <Form.Input
             name='email'
@@ -98,7 +132,6 @@ class EditProfile extends React.Component {
             control='input'
             type='text'
             onChange={this.handleProfileChange}
-            required
           />
           <Form.Input
             name='username'
@@ -106,14 +139,13 @@ class EditProfile extends React.Component {
             control='input'
             type='text'
             onChange={this.handleProfileChange}
-            required
           />
           <Form.Input
             placeholder='Password...'
             name='password'
             type='password'
             onChange={this.handleProfileChange}
-            required/>
+            />
           <Form.Input placeholder='Avatar url e.g.: http://website.com/img/avatar.jpg' type='text'
           name='avatar'
           onChange={this.handleProfileChange}
@@ -129,7 +161,6 @@ class EditProfile extends React.Component {
             selection
             onChange={this.handleCourseSelection}
             options={courseName}
-            required
           />
           <Form.Input
             placeholder='Current job...'
@@ -151,7 +182,6 @@ class EditProfile extends React.Component {
             options={this.cohortOptions}
             onChange={this.handleCohortSelection}
             value={value}
-            required
           />
           <Button type='submit'
           disabled={this.state.username !== '' ? false : true}
@@ -165,12 +195,9 @@ class EditProfile extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return ({createProject: (project, currentUser, collaborator, technologies) => dispatch(createProject(project, currentUser, collaborator, technologies ))})
+  return ({updateUser: (user, id) => dispatch(updateUser(user, id ))})
 }
-const mapStateToProps = store => ({currentUser: store.currentUser,
-users: store.users,
-projects: store.projects,
-technologies: store.technologies,
+const mapStateToProps = store => ({
 cohorts: store.cohorts,
 })
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfile)

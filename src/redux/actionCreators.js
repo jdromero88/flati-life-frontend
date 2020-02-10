@@ -1,5 +1,6 @@
 import { SEARCH_TEXT,
   LOADING,
+  SET_CURRENT_USER,
   LOGIN,
   LOGOUT,
   CREATE_USER,
@@ -82,6 +83,38 @@ function logout(user) {
 function createdUser(user) {
   return{type: CREATE_USER, payload:user}
 }
+function updatedUser(user) {
+  return{type: SET_CURRENT_USER, payload:user}
+}
+function updateUser(user, id) {
+  return dispatch => {
+    const confObj = {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({user, id})
+    }
+    fetch(`${USER_URL}/${id}`, confObj)
+    .then(res => res.json())
+    .then(editedUser => {
+      if (editedUser) {
+        dispatch(updatedUser(editedUser))
+        swal({
+          text:`User ${editedUser.username} edited! You are ready to go!`,
+          icon:'success'
+        })
+      }else{
+        swal({
+          text:'Sorry Something went wrong! Try later.',
+          icon:'warning'
+        })
+      }
+    })
+    .catch(err => console.warn(err))
+  }
+}
 function createUser(newUser) {
   return dispatch => {
     const confObj = {
@@ -111,7 +144,6 @@ function createUser(newUser) {
         })
         // return false
       }
-
     })
     .catch(err => {
       swal({
@@ -222,4 +254,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, fetchingCohorts}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, fetchingCohorts, updateUser}
