@@ -40,28 +40,39 @@ class AddProject extends React.Component {
       [e.currentTarget.name]: e.currentTarget.value
     })
   }
-  handleSelect = (e, data) => {
-    const value = parseInt(data.value)
-    if(this.state.technologiesSelected.length !== 0){
-      const foundIndex = this.state.technologiesSelected.findIndex(arr => arr === value)
-      if(foundIndex !== -1){
-        swal({
-          text:'Technology already added.',
-          icon:'warning'
-        })
-      }else{
-        this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
-          inputLinkClicked: true})
-        }
-    }else {
-      this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
-        inputLinkClicked: true})
-    }
+  handleSelect = (e, {value}) => {
+    // debugger
+    this.setState({technologiesSelected: value})
+    // const test = parseInt(value)
+    // console.log(e.target.innerText, 'data is:', data)
+
+    // console.log(data.options.filter(q => q.text === e.target.innerText).map(v => v.text).toString())
+
+
+    // console.log(data.options.filter(q => {
+    //   // debugger
+    //   return q.value === value}).map(v => v.text).toString())
+    // if(this.state.technologiesSelected.length !== 0){
+    //   const foundIndex = this.state.technologiesSelected.findIndex(arr => arr === value)
+    //   if(foundIndex !== -1){
+    //     swal({
+    //       text:'Technology already added.',
+    //       icon:'warning'
+    //     })
+    //   }else{
+    //     this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
+    //       inputLinkClicked: true})
+    //     }
+    // }else {
+    //   this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
+    //     inputLinkClicked: true})
+    // }
   }
   handleUserSelection = (e, {value}) => {
     this.setState({ collaborator_id: value })
   }
-  handleSubmit = e => {
+  handleSubmit = (e, {value}) => {
+    debugger
     const newProject = {
       name: this.state.name,
       description: this.state.description,
@@ -163,7 +174,9 @@ class AddProject extends React.Component {
                   fluid multiple selection search
                   options={this.tehcnologyOptions}
                   onChange={this.handleSelect}
-                  value={data}
+                  // value={data}
+                  data={data}
+
                   required
                 />
                 <Button type='submit'>Create</Button>
