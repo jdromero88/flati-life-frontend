@@ -3,10 +3,23 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {deleteProject} from '../redux/actionCreators'
 import { Item, Button, Divider, List } from 'semantic-ui-react'
+import swal from 'sweetalert'
 const ProjectList = props => {
   const handleClick = () => {
     console.log('delete this project', project)
-    props.deleteProject(project)
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this project!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        props.deleteProject(project)
+
+      }
+    })
   }
   // debugger
   const {project} = props
