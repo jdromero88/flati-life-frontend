@@ -10,6 +10,7 @@ import { SEARCH_TEXT,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
   FETCHED_COHORTS,
+  DELETE_PROJECT,
 } from './actionType'
 import swal from 'sweetalert'
 
@@ -221,6 +222,40 @@ function createProject(newProject, user, collaboratorID=null, technologies=null)
     .catch(err => console.warn(err))
   }
 }
+function deletedProject(project) {
+  return {type: DELETE_PROJECT, payload:project}
+}
+function deleteProject(project) {
+  return dispatch => {
+    const confObj = {
+      method: 'DELETE',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      }
+    }
+    const projectToRemove = project
+    fetch(PROJECTS_URL+`/${project.id}`,confObj)
+    .then(res => res.json())
+    .then((projectDeleted, project) => {
+      if (projectDeleted.message === 'success') {
+        // debugger
+        dispatch(deletedProject(projectToRemove))
+        swal({
+          text:'Project Deleted',
+          icon:'success'
+        })
+      }else {
+        swal({
+          text:'Something went wrong. Try later.',
+          icon:'warning'
+        })
+      }
+    })
+    .catch(err => console.warn(err))
+  }
+}
+
 function fetchedTechnologies(technologiesArray) {
   return {type: FETCHED_TECHNOLOGY, payload: technologiesArray}
 }
@@ -254,4 +289,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, fetchingCohorts, updateUser}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, deleteProject, fetchingCohorts, updateUser}

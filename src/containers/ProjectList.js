@@ -1,8 +1,16 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import {deleteProject} from '../redux/actionCreators'
 import { Item, Button, Icon, Divider } from 'semantic-ui-react'
 const ProjectList = props => {
-  const project = props.project.project
+  const handleClick = () => {
+    console.log('delete this project', project)
+    props.deleteProject(project)
+  }
+  debugger
+  const {project} = props
+  console.log(project)
   return(
     <React.Fragment>
       <Item.Group link>
@@ -16,7 +24,7 @@ const ProjectList = props => {
           />
           </Item.Content>
         </Item>
-        <Button>
+        <Button onClick={handleClick}>
           <Icon name='trash alternate'/>
         </Button>
       </Item.Group>
@@ -25,4 +33,5 @@ const ProjectList = props => {
   )
 }
 
-export default ProjectList
+const mapDispatchToProps = (dispatch) => ({deleteProject: (project) => dispatch(deleteProject(project))})
+export default connect(null, mapDispatchToProps)(ProjectList)

@@ -92,6 +92,7 @@ class EditProfile extends React.Component {
   }
   render(){
     const { modalOpen, value} = this.state
+    const {editUser} = this.state
     return(
       <React.Fragment>
       <Button animated onClick={this.openModal}>
@@ -110,6 +111,7 @@ class EditProfile extends React.Component {
             placeholder='First name...'
             control='input'
             type='text'
+            value={editUser.first_name}
             onChange={this.handleProfileChange}
           />
           <Form.Input
@@ -117,6 +119,7 @@ class EditProfile extends React.Component {
             placeholder='Last name...'
             control='input'
             type='text'
+            value={editUser.last_name}
             onChange={this.handleProfileChange}
           />
           <Form.Input
@@ -124,6 +127,7 @@ class EditProfile extends React.Component {
             placeholder='Pronouns e.g.: She|Her...'
             control='input'
             type='text'
+            value={editUser.pronouns}
             onChange={this.handleProfileChange}
           />
           <Form.Input
@@ -131,6 +135,7 @@ class EditProfile extends React.Component {
             placeholder='Email'
             control='input'
             type='text'
+            value={editUser.email}
             onChange={this.handleProfileChange}
           />
           <Form.Input
@@ -138,20 +143,24 @@ class EditProfile extends React.Component {
             placeholder='Username...'
             control='input'
             type='text'
+            value={editUser.username}
             onChange={this.handleProfileChange}
           />
           <Form.Input
             placeholder='Password...'
             name='password'
             type='password'
+            value={editUser.password}
             onChange={this.handleProfileChange}
             />
           <Form.Input placeholder='Avatar url e.g.: http://website.com/img/avatar.jpg' type='text'
           name='avatar'
+          value={editUser.avatar}
           onChange={this.handleProfileChange}
           />
           <Form.Input placeholder='Favorite Language e.g.: Ruby, JS' type='text'
           name='fav_language'
+          value={editUser.fav_language}
           onChange={this.handleProfileChange}
           />
           <Form.Dropdown
@@ -166,11 +175,13 @@ class EditProfile extends React.Component {
             placeholder='Current job...'
             type='text'
             name='current_job'
+            value={editUser.current_job}
             onChange={this.handleProfileChange}
           />
           <Form.Input
             placeholder='What you did before Flatiron School...' type='text'
             name='before_flatiron'
+            value={editUser.before_flatiron}
             onChange={this.handleProfileChange}
             />
           <Form.Dropdown

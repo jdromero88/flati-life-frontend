@@ -7,6 +7,7 @@ import {SEARCH_TEXT,
   FETCHED_USERS,
   FETCHED_PROJECTS,
   CREATE_TECHNOLOGY,
+  DELETE_PROJECT,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
   FETCHED_COHORTS,
@@ -39,6 +40,19 @@ const currentUsersReducers = (oldState=null, action) => {
       return action.payload
     case SET_CURRENT_USER:
       return {...action.payload}
+    case CREATE_PROJECT:
+      // debugger
+      const newProject = {...oldState,
+          user_projects:[...oldState.user_projects, action.payload]
+        }
+      return newProject
+    case DELETE_PROJECT:
+      // debugger
+      // oldState.user_projects.filter(p => p.project.id !== action.payload.id)
+      const project = {...oldState,
+          user_projects:[...oldState.user_projects.filter(p => p.project.id !== action.payload.id)]
+        }
+      return project
     case LOGOUT:
       return action.payload
     default:
@@ -52,6 +66,10 @@ const projectsReducers = (oldState=[], action) => {
       return action.payload
     case CREATE_PROJECT:
       return [...oldState, action.payload]
+    case DELETE_PROJECT:
+      debugger
+      const newProjets = [...oldState.filter(p => p.id !== action.payload.id)]
+      return newProjets
     default:
       return oldState
   }
