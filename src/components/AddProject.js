@@ -57,8 +57,6 @@ class AddProject extends React.Component {
       this.setState({technologiesSelected: [...this.state.technologiesSelected, data.value].flat(),
         inputLinkClicked: true})
     }
-
-
   }
   handleUserSelection = (e, {value}) => {
     this.setState({ collaborator_id: value })
@@ -88,7 +86,7 @@ class AddProject extends React.Component {
 
   usersOptions = this.props.users.filter(user => user.id !== this.props.currentUser.id).map( user => ({key: user.id, value: user.id, text: user.username}))
 
-  tehcnologyOptions = this.props.technologies.map((technology, index) => ({
+  tehcnologyOptions = this.props.technologies.map((technology) => ({
       key: technology.id,
       text: technology.name,
       value: technology.id,

@@ -65,9 +65,9 @@ const projectsReducers = (oldState=[], action) => {
     case FETCHED_PROJECTS:
       return action.payload
     case CREATE_PROJECT:
-      return [...oldState, action.payload]
+      return [...oldState, action.payload.project]
     case DELETE_PROJECT:
-      debugger
+      // debugger
       const newProjets = [...oldState.filter(p => p.id !== action.payload.id)]
       return newProjets
     default:

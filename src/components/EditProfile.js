@@ -96,7 +96,7 @@ class EditProfile extends React.Component {
     return(
       <React.Fragment>
       <Button animated onClick={this.openModal}>
-        <Button.Content visible>Edit</Button.Content>
+        <Button.Content visible>Edit Profile</Button.Content>
         <Button.Content hidden>
           <Icon name='edit outline'/>
         </Button.Content>

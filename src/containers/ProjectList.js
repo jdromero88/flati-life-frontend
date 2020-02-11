@@ -2,16 +2,20 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import {deleteProject} from '../redux/actionCreators'
-import { Item, Button, Icon, Divider } from 'semantic-ui-react'
+import { Item, Button, Divider, List } from 'semantic-ui-react'
 const ProjectList = props => {
   const handleClick = () => {
     console.log('delete this project', project)
     props.deleteProject(project)
   }
-  debugger
+  // debugger
   const {project} = props
-  console.log(project)
-  return(
+  // console.log(project)
+  // if (!props.project) {
+  //   return null
+  // }
+  // !project ? null :
+  return (
     <React.Fragment>
       <Item.Group link>
         <Item as={Link} to={`/projects/${project.id}`}>
@@ -24,10 +28,18 @@ const ProjectList = props => {
           />
           </Item.Content>
         </Item>
-        <Button onClick={handleClick}>
-          <Icon name='trash alternate'/>
-        </Button>
+        <Button icon='trash alternate' onClick={handleClick} />
+        <Button icon='edit outline' onClick={handleClick} />
       </Item.Group>
+      <List divided relaxed>
+        <List.Item>
+          <List.Icon name='github' size='large' verticalAlign='middle' />
+          <List.Content>
+            <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
+            <List.Description as='a'>Updated 10 mins ago</List.Description>
+          </List.Content>
+        </List.Item>
+      </List>
       <Divider />
     </React.Fragment>
   )

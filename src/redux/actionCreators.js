@@ -198,8 +198,8 @@ function createTechnology(newTechnology) {
     .catch(err => console.warn(err))
   }
 }
-function createdProject(project) {
-  return {type: CREATE_PROJECT, payload:project}
+function createdProject(newUserProject) {
+  return {type: CREATE_PROJECT, payload:newUserProject}
 }
 function createProject(newProject, user, collaboratorID=null, technologies=null) {
   return dispatch => {
@@ -214,9 +214,10 @@ function createProject(newProject, user, collaboratorID=null, technologies=null)
     dispatch(loading())
     fetch(PROJECTS_URL, confObj)
     .then(res => res.json())
-    .then(newProject => {
-      newProject ?
-        dispatch(createdProject(newProject))
+    .then(newUserProject => {
+      // debugger
+      newUserProject ?
+        dispatch(createdProject(newUserProject))
       : alert('Something went wrong')
     })
     .catch(err => console.warn(err))
