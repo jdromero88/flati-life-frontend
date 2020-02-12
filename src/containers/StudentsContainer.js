@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import { Card, Divider, Select, Item} from 'semantic-ui-react'
+import { Card, Divider, Form, Segment} from 'semantic-ui-react'
 import StudentCard from '../components/StudentCard'
 import SearchBar from '../components/SearchBar'
 const filterBy = [
@@ -20,19 +20,19 @@ class StudentsContainer extends React.Component{
 
   render(){
     const {value} = this.state
-    return(
+    return !this.props.users ? <Segment loading></Segment> :(
       <React.Fragment>
-        <SearchBar />
-        <Item>
-        <Item.Header>
-          Filter by Course name:
-        </Item.Header>
-        </Item>
-        <Select placeholder='Select Course'
-          options={filterBy}
-          onChange={this.handleFilter}
-          value={value}
-        />
+        <Form>
+          <Form.Group>
+            <SearchBar />
+
+            <Form.Select label='Filter by Course name:' placeholder='Select Course'
+            options={filterBy}
+            onChange={this.handleFilter}
+            value={value}
+            />
+          </Form.Group>
+        </Form>
         <Divider />
         <Card.Group itemsPerRow={3} fluid='true'>
           {

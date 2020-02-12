@@ -7,7 +7,7 @@ import { Container,
   Image,
   List,
   Segment,} from 'semantic-ui-react'
-import logo from '../fs-logo.png'
+import flatiLogo from '../assets/flatilifelogo.jpg'
 const currentDate = new Date()
 const FooterContent = () => {
   return(
@@ -37,15 +37,14 @@ const FooterContent = () => {
                 </List>
               </Grid.Column>
               <Grid.Column width={6}>
-                <Header as='h4' content='\\FlatiLife' />
+                <Header as='h4' content='Flati//Life' />
                 <p>
                   Social Network for Flatiron Students curating projects and student experiences which aims to help new students survive bootcamp.
                 </p>
               </Grid.Column>
             </Grid>
-
             <Divider section />
-            <Image centered size='tiny' src={logo} />
+            <Image centered size='tiny' src={flatiLogo} />
             <List horizontal divided link size='small'>
               <List.Item as='a' href='#'>
                 Contact Us

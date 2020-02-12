@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Card, Divider} from 'semantic-ui-react'
+import {Card, Divider, Form} from 'semantic-ui-react'
 import ProjectCard from '../components/ProjectCard'
 import SearchBar from '../components/SearchBar'
 
@@ -9,7 +9,11 @@ const ProjectsContainer = props => {
     <React.Fragment>
       {
         props.home ? null
-        : <SearchBar />
+        : <Form>
+            <Form.Group>
+              <SearchBar />
+            </Form.Group>
+          </Form>
       }
       <Divider />
       <Card.Group itemsPerRow={3} fluid='true'>

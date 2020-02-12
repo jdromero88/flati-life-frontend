@@ -7,9 +7,10 @@ import {SEARCH_TEXT,
   FETCHED_USERS,
   FETCHED_PROJECTS,
   CREATE_TECHNOLOGY,
-  DELETE_PROJECT,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
+  UPDATE_PROJECT,
+  DELETE_PROJECT,
   FETCHED_COHORTS,
 } from './actionType'
 
@@ -46,9 +47,17 @@ const currentUsersReducers = (oldState=null, action) => {
           user_projects:[...oldState.user_projects, action.payload]
         }
       return newProject
+    case UPDATE_PROJECT:
+        // debugger
+        const updateProject = {...oldState, user_projects: [...oldState.user_projects.map(p => {
+          if (p.project.id === action.payload.id) {
+            p.project = action.payload
+          }
+          return p
+          })
+        ]}
+      return updateProject
     case DELETE_PROJECT:
-      // debugger
-      // oldState.user_projects.filter(p => p.project.id !== action.payload.id)
       const project = {...oldState,
           user_projects:[...oldState.user_projects.filter(p => p.project.id !== action.payload.id)]
         }
@@ -66,6 +75,10 @@ const projectsReducers = (oldState=[], action) => {
       return action.payload
     case CREATE_PROJECT:
       return [...oldState, action.payload.project]
+    case UPDATE_PROJECT:
+      // debugger
+      const newProjects = [...oldState.filter( p => p.id !== action.payload.id), action.payload]
+      return newProjects
     case DELETE_PROJECT:
       // debugger
       const newProjets = [...oldState.filter(p => p.id !== action.payload.id)]

@@ -3,9 +3,8 @@ import {connect} from 'react-redux'
 import { withRouter} from 'react-router-dom'
 import {createTechnology} from '../redux/actionCreators'
 import { Button,
-  Form,
-  Divider,
-  Grid,
+  Form, Divider,
+  Modal, Icon
   } from 'semantic-ui-react'
   import swal from 'sweetalert'
 class AddTechnology extends React.Component {
@@ -13,7 +12,11 @@ class AddTechnology extends React.Component {
     name: '',
     description: '',
     website:'',
+    modalIsOpen: false
   }
+  openModal = () => this.setState({ modalIsOpen: true })
+  closeModal = () => this.setState({ modalIsOpen: false })
+
   handleChange = e => {
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value
@@ -27,53 +30,57 @@ class AddTechnology extends React.Component {
     }
     e.preventDefault()
     this.props.createTechnology(newTechnology)
-    // const t = this
-    // debugger
     swal(`Technology ${this.state.name} created!`, "Done!", "success")
-    this.props.history.push('/technologies')
-    // return <Redirect to='/technologies' />
+    this.closeModal()
+    // this.props.history.push('/technologies')
+
   }
-
-  // doSomething = () => {
-  //   alert('you click me')
-  //   return <Redirect to='/technologies' />
-  // }
-
   render(){
+    const {modalIsOpen} = this.state
     return(
       <React.Fragment>
         <Divider hidden/>
-        <h2>New Technology</h2>
-        {/*<Button onClick={this.doSomething} label='button'/>*/}
-        <Grid centered columns={1}>
-          <Form onSubmit={this.handleSubmit}>
-            <Form.Input
-              name='name'
-              placeholder='Technology name...'
-              control='input'
-              type='text'
-              onChange={this.handleChange}
-              required
-            />
-            <Form.Input
-              name='description'
-              placeholder='Description...'
-              control='input'
-              type='text'
-              onChange={this.handleChange}
-              required
-            />
-            <Form.Input
-              name='website'
-              placeholder='Website...'
-              control='input'
-              type='text'
-              onChange={this.handleChange}
-              required
-            />
-            <Button type='submit'>Create</Button>
-          </Form>
-        </Grid>
+        {!this.props.currentUser ? null
+        : <Button animated onClick={this.openModal} >
+          <Button.Content visible>Add Technology</Button.Content>
+          <Button.Content hidden>
+            <Icon name='add circle'/>
+          </Button.Content>
+        </Button>
+        }
+
+        <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
+        <Modal.Header>Add Technology</Modal.Header>
+          <Modal.Content>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Input
+                name='name'
+                placeholder='Technology name...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Form.Input
+                name='description'
+                placeholder='Description...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Form.Input
+                name='website'
+                placeholder='Website...'
+                control='input'
+                type='text'
+                onChange={this.handleChange}
+                required
+              />
+              <Button type='submit'>Create</Button>
+            </Form>
+          </Modal.Content>
+        </Modal>
       </React.Fragment>
     )
   }
@@ -82,5 +89,5 @@ class AddTechnology extends React.Component {
 const mapDispatchToProps = dispatch => {
   return({createTechnology: (technology) => dispatch(createTechnology(technology))})
 }
-// const mapStateToProps = store => ({newTechnology: store.newTechnology})
-export default withRouter(connect(null, mapDispatchToProps)(AddTechnology))
+const mapStateToProps = store => ({currentUser: store.currentUser})
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddTechnology))

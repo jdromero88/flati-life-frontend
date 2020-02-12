@@ -9,16 +9,17 @@ import { SEARCH_TEXT,
   CREATE_TECHNOLOGY,
   FETCHED_TECHNOLOGY,
   CREATE_PROJECT,
+  UPDATE_PROJECT,
   FETCHED_COHORTS,
   DELETE_PROJECT,
 } from './actionType'
 import swal from 'sweetalert'
 
-const USER_URL = 'http://localhost:3000/users'
-const USER_LOGIN_URL = 'http://localhost:3000/users/login'
-const PROJECTS_URL = 'http://localhost:3000/projects'
-const TECHNOLOGIES_URL = 'http://localhost:3000/tech_specifications'
-const COHORTS_URL = 'http://localhost:3000/cohorts'
+const USER_URL = 'http://localhost:8080/users'
+const USER_LOGIN_URL = 'http://localhost:8080/users/login'
+const PROJECTS_URL = 'http://localhost:8080/projects'
+const TECHNOLOGIES_URL = 'http://localhost:8080/tech_specifications'
+const COHORTS_URL = 'http://localhost:8080/cohorts'
 
 function loading() {
   return {type:LOADING}
@@ -223,6 +224,31 @@ function createProject(newProject, user, collaboratorID=null, technologies=null)
     .catch(err => console.warn(err))
   }
 }
+
+function updatedProject(updatedProject) {
+  return {type:UPDATE_PROJECT, payload:updatedProject}
+}
+function updateProject(project, id) {
+  return dispatch => {
+    const confObj = {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": 'application/json'
+      },
+      body: JSON.stringify({project})
+    }
+    dispatch(loading())
+    fetch(PROJECTS_URL+`/${id}`, confObj)
+    .then(res => res.json())
+    .then(updateProject => {
+      if (updateProject) {
+        dispatch(updatedProject(updateProject))
+      }
+    })
+    .catch(err => console.warn(err))
+  }
+}
 function deletedProject(project) {
   return {type: DELETE_PROJECT, payload:project}
 }
@@ -290,4 +316,4 @@ function fetchingProjects() {
   }
 }
 
-export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, deleteProject, fetchingCohorts, updateUser}
+export {fetchingUsers, fetchingProjects, onSearch, loginUser, logout, createUser, createTechnology, fetchingTechnologies, createProject, deleteProject, fetchingCohorts, updateUser, updateProject}

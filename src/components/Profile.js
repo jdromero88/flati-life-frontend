@@ -7,8 +7,15 @@ import AddProject from './AddProject'
 import ProjectList from '../containers/ProjectList'
 
 class Profile extends React.Component {
+  // this.props.currentUser.user_projects.map(p => {
+  //   // debugger
+  //   return   <ProjectList
+  //   key={p.id}
+  //   project={p.project}/>
+  // })
 
   render(){
+    // debugger
 
     return !this.props.currentUser ? null : (
       <React.Fragment>
@@ -26,18 +33,15 @@ class Profile extends React.Component {
             </Grid.Column>
             <Grid.Column width={13}>
             <h2>Projects:</h2>
-
             {
-              // this.props.currentUser.user_projects.map(p => {
-                // store.projects.filter(project => project.name.toLowerCase().includes(store.searchText.toLowerCase()))
-                //  .id === this.props.currentUser.id)
-                this.props.currentUser.user_projects.map(p => {
-                  // debugger
-                  return   <ProjectList
-                  key={p.id}
-                  project={p.project}/>
-                })
-              }
+              this.props.currentUser.user_projects.map(p => {
+                // debugger
+                return   <ProjectList
+                key={p.id}
+                project={p.project}/>
+              })
+
+            }
             </Grid.Column>
           </Grid>
         </Container>

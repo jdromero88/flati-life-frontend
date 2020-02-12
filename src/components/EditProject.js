@@ -1,23 +1,24 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import { withRouter} from 'react-router-dom'
-import {createProject} from '../redux/actionCreators'
+import {updateProject} from '../redux/actionCreators'
 import { Modal,
 Form, Button,
-Image, Icon,
+Image,
 Grid, } from 'semantic-ui-react'
 import swal from 'sweetalert'
-class AddProject extends React.Component {
+class EditProject extends React.Component {
   state = {
-    name: '',
-    description: '',
-    image: 'https://inteligenciamm.com.br/wp-content/uploads/2015/10/Logo-Default.png',
-    repository_url: '',
-    modalIsOpen: false,
-    modalProfileIsOpen: false,
-    collaborator_id: null,
-    technologiesSelected: [],
-    inputLinkClicked: false,
+    editProject:{
+      name: '',
+      description: '',
+      image: '',
+      repository_url: '',
+      modalIsOpen: false,
+      modalProfileIsOpen: false,
+      collaborator_id: null,
+      technologiesSelected: [],
+      }
   }
 
   openModal = () => this.setState({ modalIsOpen: true })
@@ -27,48 +28,41 @@ class AddProject extends React.Component {
     image: '',
     repository_url: '',
     collaborator_id: null,
-    technologiesSelected: [],
-    inputLinkClicked: false
+    technologiesSelected: []
   })
-
-  cohortOptions = this.props.cohorts.map(cohort => ({
-    key: cohort.id, value: cohort.id, text: cohort.name
-  }))
 
   handleChange = e => {
     this.setState({
-      [e.currentTarget.name]: e.currentTarget.value
+      editProject:{ ...this.state.editProject,
+        [e.currentTarget.name]: e.currentTarget.value
+      }
     })
   }
   handleSelect = (e, {value}) => {
+    // debugger
     this.setState({technologiesSelected: value})
   }
   handleUserSelection = (e, {value}) => {
     this.setState({ collaborator_id: value })
   }
   handleSubmit = (e, {value}) => {
-    const newProject = {
-      name: this.state.name,
-      description: this.state.description,
-      image: this.state.image,
-      repository_url: this.state.repository_url,
-    }
-    this.props.createProject(newProject, this.props.currentUser.id, this.state.collaborator_id, this.state.technologiesSelected)
-    swal(`Project ${this.state.name} created!`, "Done!", "success")
-    this.setState({
-      name: '',
-      description: '',
-      image: '',
-      repository_url: '',
-      modalIsOpen: false,
-      modalProfileIsOpen: false,
-      collaborator_id: null,
-      technologiesSelected: [],
-      inputLinkClicked: false
-    })
+    // debugger
+    // console.log()
+
+    // const {name, description, image, repository_url} = this.state.editProject
+    // const editProject = {
+    //   name: this.state.name,
+    //   description: this.state.description,
+    //   image: this.state.image,
+    //   repository_url: this.state.repository_url,
+    // }
+    this.props.updateProject(this.state.editProject, this.props.project.id)
+    swal(`Project ${this.state.name} updated!`, "Done!", "success")
     this.closeModal()
   }
-
+  componentDidMount() {
+    this.setState({editProject: this.props.project})
+  }
   usersOptions = this.props.users.filter(user => user.id !== this.props.currentUser.id).map( user => ({key: user.id, value: user.id, text: user.username}))
 
   tehcnologyOptions = this.props.technologies.map((technology) => ({
@@ -81,20 +75,15 @@ class AddProject extends React.Component {
     this.setState({ collaborator_id: value })
   }
   render(){
-    const {modalIsOpen, value, data=[]} = this.state
+    // console.log(this.props.project)
+    const {modalIsOpen} = this.state
+    const {editProject} = this.state
     return(
       <React.Fragment>
-        <Button animated onClick={this.openModal}>
-        <Button.Content visible>
-          Create Project
-        </Button.Content>
-        <Button.Content hidden>
-          <Icon name='add circle'/>
-        </Button.Content>
-        </Button>
+        <Button icon='edit outline' onClick={this.openModal} />
         <Grid centered columns={1}>
         <Modal open={modalIsOpen} onClose={this.closeModal} closeIcon>
-          <Modal.Header>Create Project</Modal.Header>
+          <Modal.Header>Edit Project</Modal.Header>
           <Modal.Content image>
             <Grid centered columns={3}>
                 <Image wrapped size='small' src={this.state.image} />
@@ -105,7 +94,7 @@ class AddProject extends React.Component {
                   control='input'
                   type='text'
                   onChange={this.handleChange}
-                  required
+                  value={editProject.name}
                 />
                 <Form.Input
                   name='description'
@@ -113,7 +102,7 @@ class AddProject extends React.Component {
                   control='input'
                   type='text'
                   onChange={this.handleChange}
-                  required
+                  value={editProject.description}
                 />
                 <Form.Input
                   name='image'
@@ -121,6 +110,7 @@ class AddProject extends React.Component {
                   control='input'
                   type='text'
                   onChange={this.handleChange}
+                  value={editProject.image}
                 />
                 <Form.Input
                   name='repository_url'
@@ -128,31 +118,10 @@ class AddProject extends React.Component {
                   control='input'
                   type='text'
                   onChange={this.handleChange}
+                  value={editProject.repository_url}
                   required
                 />
-                <Form.Dropdown
-                  placeholder='Select User'
-                  fluid
-                  search
-                  selection
-                  name='collaborator_id'
-                  options={this.usersOptions}
-                  onChange={this.handleUserSelection}
-                  value={value}
-                  required
-                />
-                <Form.Dropdown
-                  placeholder='Technologies'
-                  name='technologiesSelected'
-                  fluid multiple selection search
-                  options={this.tehcnologyOptions}
-                  onChange={this.handleSelect}
-                  // value={data}
-                  data={data}
-
-                  required
-                />
-                <Button type='submit'>Create</Button>
+                <Button type='submit'>Update</Button>
               </Form>
             </Grid>
           </Modal.Content>
@@ -164,12 +133,10 @@ class AddProject extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => {
-  return ({createProject: (project, currentUser, collaborator, technologies) => dispatch(createProject(project, currentUser, collaborator, technologies ))})
+  return ({updateProject: (editProject, id) => dispatch(updateProject(editProject, id))})
 }
 const mapStateToProps = store => ({currentUser: store.currentUser,
 users: store.users,
-projects: store.projects,
 technologies: store.technologies,
-cohorts: store.cohorts,
 })
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddProject))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditProject))
