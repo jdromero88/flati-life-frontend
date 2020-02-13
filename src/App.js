@@ -23,7 +23,6 @@ import Login from './components/Login'
 import Profile from './components/Profile'
 import AddTechnology from './components/AddTechnology'
 import TechnologyDetails from './components/TechnologyDetails'
-
 class App extends Component {
   componentDidMount() {
     this.props.fetchingProjects()
@@ -34,9 +33,9 @@ class App extends Component {
 
   render(){
     return (
-      <React.Fragment>
+      <div className='main-container'>
         <Header />
-        <Container>
+        <Container className='container-container'>
           <Switch>
             <Route exact path='/signup' component= {SignUp}/>
             <Route exact path='/login' render={() => this.props.currentUser ?
@@ -81,7 +80,7 @@ class App extends Component {
           </Switch>
         </Container>
         <Footer />
-      </React.Fragment>
+      </div>
     )
   }
 }

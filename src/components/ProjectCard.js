@@ -9,6 +9,7 @@ const ProjectCard = props => {
       <Card
       as={Link}
       to={`/projects/${project.id}`}
+      className='transparent-card'
       >
         <Card.Content>
         <Image

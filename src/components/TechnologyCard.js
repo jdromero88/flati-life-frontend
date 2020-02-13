@@ -8,6 +8,7 @@ const TechnologyCard = props => {
       <Card
         as={Link}
         to={`/technologies/${technology.id}`}
+        className='transparent-card'
       >
         <Card.Content>
           <Card.Header>{technology.name}</Card.Header>

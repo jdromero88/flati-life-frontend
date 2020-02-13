@@ -1,38 +1,52 @@
 import React from 'react'
-import {Container, Image, List} from 'semantic-ui-react'
+import {Container, Image, Item, List, Grid, Divider} from 'semantic-ui-react'
+import moment from 'moment'
+import ProjectList from '../containers/ProjectList'
 const StudentDetails = props => {
-  const student = props.student
-  return !student ? null : (
+  const {avatar, first_name, last_name, email, bio, username, pronouns, fav_language, course_name, created_at, cohort} = props.student
+  const sDetail = true
+  return !props.student ? null : (
     <React.Fragment>
       <Container>
+      <Divider hidden/>
+      <Divider hidden/>
+      <Divider hidden/>
+      <Divider hidden/>
+      <Grid className='profile-container'>
+        <Grid.Column width={3}>
         <Image
           floated='left'
           size='small'
-          src={student.avatar}
+          src={avatar}
         />
-        <h1>{student.first_name + ' '+ student.last_name}</h1>
-        <h2>Username: {student.username}</h2>
-        <h2>Email: {student.email}</h2>
-        <h2>Pronouns: {student.pronouns}</h2>
-        <h2>Bio: {student.bio}</h2>
-        <h2>Favorite Language: {student.fav_language}</h2>
-        <h2>Course: {student.course_name}</h2>
-        <h2>Current Job:</h2>
-        <p>{student.current_job}</p>
-        <h2>Before Flatiron:</h2>
-        <p>{student.before_flatiron}</p>
-        <h2>Cohort name: {student.cohort.name}</h2>
+        <Item.Group>
+          <Item>
+            <Item.Content>
+              <Item.Header>{first_name +' '+ last_name} </Item.Header>
+              <Item.Meta><strong>Bio:</strong></Item.Meta>
+              <Item.Description>
+                {bio}
+              </Item.Description>
+              <Item.Description><strong>Username:</strong> {username}</Item.Description>
+              <Item.Description><strong>Pronouns:</strong> {pronouns}</Item.Description>
+              <Item.Description><strong>Email:</strong> {email}</Item.Description>
+              <Item.Description><strong>Favorite Language:</strong> {fav_language}</Item.Description>
+              <Item.Description><strong>Course Name:</strong> {course_name}</Item.Description>
+              <Item.Description><strong>Cohort:</strong> {cohort.name}</Item.Description>
+              <Item.Description><strong>Joined:</strong> {moment(created_at, 'YYYYMMDD').fromNow()}</Item.Description>
+            </Item.Content>
+          </Item>
+        </Item.Group>
+        </Grid.Column>
+        <Grid.Column width={13}>
         <h2>Projects:</h2>
-        { student.user_projects === [] ? <List.Item>No Projects </List.Item> :
-          student.user_projects.map(user_project => 
-            <List>
-              <List.Item>
-                <Image avatar src={user_project.project.image} />
-                {user_project.project.name}
-              </List.Item>
-            </List>
+
+        { props.student.user_projects === [] ? <List.Item>No Projects </List.Item> :
+          props.student.user_projects.map(user_project => <ProjectList key={user_project.id} project={user_project.project} sDetail={sDetail}/>
           )
         }
+        </Grid.Column>
+        </Grid>
       </Container>
     </React.Fragment>
   )

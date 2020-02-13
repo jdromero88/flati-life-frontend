@@ -10,6 +10,7 @@ const StudentCard = props => {
         <Card
           as={!currentUser ? null : Link}
           to={`/students/${user.id}`}
+          className='transparent-card'
         >
           <Card.Content>
             <Image

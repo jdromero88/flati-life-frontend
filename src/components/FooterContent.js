@@ -12,7 +12,7 @@ const currentDate = new Date()
 const FooterContent = () => {
   return(
     <React.Fragment>
-    <Segment  vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+    <Segment className='footer'  vertical style={{ margin: '5em 0em 0em', padding: '5em 0em', backgroundColor: '#00b3e6'}}>
           <Container textAlign='center'>
             <Grid divided  stackable>
               <Grid.Column width={3}>
@@ -32,8 +32,8 @@ const FooterContent = () => {
               <Grid.Column width={3}>
                 <Header  as='h4' content='Useful links' />
                 <List link>
-                  <List.Item as='a' target='_blank' href='https://www.google.com'>Google</List.Item>
-                  <List.Item as='a' target='_blank' >Link Two</List.Item>
+                  <List.Item as='a' target='_blank' href='https://flatironschool.com/'>FlatironSchool.com</List.Item>
+                  <List.Item as='a' target='_blank' href='https://flatironschool.com/blog'>FlarironSchool.com/blog</List.Item>
                 </List>
               </Grid.Column>
               <Grid.Column width={6}>
@@ -44,7 +44,6 @@ const FooterContent = () => {
               </Grid.Column>
             </Grid>
             <Divider section />
-            <Image centered size='tiny' src={flatiLogo} />
             <List horizontal divided link size='small'>
               <List.Item as='a' href='#'>
                 Contact Us

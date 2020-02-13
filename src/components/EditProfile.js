@@ -11,21 +11,7 @@ const courseName = [
 ]
 class EditProfile extends React.Component {
   state = {
-      editUser:{
-        first_name: '',
-        last_name: '',
-        username: '',
-        password: '',
-        email: '',
-        pronouns: '',
-        avatar: '',
-        bio: '',
-        fav_language: '',
-        course_name: '',
-        current_job: '',
-        cohort_id: '',
-        before_flatiron: '',
-      },
+      editUser:{},
       modalOpen: false,
   }
   componentDidMount() {
@@ -93,6 +79,7 @@ class EditProfile extends React.Component {
   render(){
     const { modalOpen, value} = this.state
     const {editUser} = this.state
+
     return(
       <React.Fragment>
       <Button animated onClick={this.openModal}>
@@ -170,6 +157,7 @@ class EditProfile extends React.Component {
             selection
             onChange={this.handleCourseSelection}
             options={courseName}
+            defaultValue={editUser.course_name}
           />
           <Form.Input
             placeholder='Current job...'
@@ -192,7 +180,6 @@ class EditProfile extends React.Component {
             name='cohort_id'
             options={this.cohortOptions}
             onChange={this.handleCohortSelection}
-            value={value}
           />
           <Button type='submit'
           disabled={this.state.username !== '' ? false : true}

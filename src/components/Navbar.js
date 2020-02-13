@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import { Link, NavLink } from "react-router-dom"
 import { Menu, Sticky, Image, Icon } from "semantic-ui-react"
-import flatilifelogo from '../assets/flatilifelogo.jpg'
+import fljpg from '../assets/option1.png'
 import {logout} from '../redux/actionCreators'
 class Navbar extends React.Component{
   handleLogout = () => {
@@ -15,7 +15,7 @@ class Navbar extends React.Component{
         <Menu>
           <Menu.Item>
             <Link to='/'>
-              <Image src={flatilifelogo} size='tiny'/>
+            <Image src={fljpg} size='tiny'/>
             </Link>
           </Menu.Item>
           <NavLink to='/' className='item'>Home</NavLink>

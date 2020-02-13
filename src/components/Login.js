@@ -196,6 +196,7 @@ class Login extends React.Component {
             name='fav_language'
             onChange={this.handleChange}
             />
+            <Form.Field required>
             <Form.Dropdown
               placeholder='Course Name'
               name='course_name'
@@ -205,6 +206,7 @@ class Login extends React.Component {
               options={courseName}
               required
             />
+            </Form.Field>
             <Form.Input
               placeholder='Current job...'
               type='text'
@@ -216,7 +218,9 @@ class Login extends React.Component {
               name='before_flatiron'
               onChange={this.handleChange}
               />
+            <Form.Field required>
             <Form.Dropdown
+              required
               placeholder='Select Cohort'
               fluid
               search
@@ -225,8 +229,8 @@ class Login extends React.Component {
               options={this.cohortOptions}
               onChange={this.handleCohortSelection}
               value={value}
-              required
             />
+            </Form.Field>
             <Form.Field>
               <Checkbox label='I agree to the Terms and Conditions'
               checked={this.state.terms}

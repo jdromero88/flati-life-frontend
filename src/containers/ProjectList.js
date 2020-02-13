@@ -35,10 +35,14 @@ const ProjectList = props => {
           <Item icon='linkify'content={repository_url}/>
         </Item.Content>
         </Item>
-        <Button.Group>
-          <Button icon='trash alternate' onClick={handleClick} />
-          <EditProject project={project}/>
-        </Button.Group>
+        {
+          !props.sDetail ? null
+          : <Button.Group>
+              <Button icon='trash alternate' onClick={handleClick} />
+              <EditProject project={project}/>
+            </Button.Group>
+
+        }
       </Item.Group>
       <Divider />
     </React.Fragment>

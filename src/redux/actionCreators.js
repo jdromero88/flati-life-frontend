@@ -15,11 +15,11 @@ import { SEARCH_TEXT,
 } from './actionType'
 import swal from 'sweetalert'
 
-const USER_URL = 'http://localhost:8080/users'
-const USER_LOGIN_URL = 'http://localhost:8080/users/login'
-const PROJECTS_URL = 'http://localhost:8080/projects'
-const TECHNOLOGIES_URL = 'http://localhost:8080/tech_specifications'
-const COHORTS_URL = 'http://localhost:8080/cohorts'
+const USER_URL = 'http://localhost:3000/users'
+const USER_LOGIN_URL = 'http://localhost:3000/users/login'
+const PROJECTS_URL = 'http://localhost:3000/projects'
+const TECHNOLOGIES_URL = 'http://localhost:3000/tech_specifications'
+const COHORTS_URL = 'http://localhost:3000/cohorts'
 
 function loading() {
   return {type:LOADING}
