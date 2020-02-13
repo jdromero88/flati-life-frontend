@@ -36,7 +36,7 @@ const ProjectList = props => {
         </Item.Content>
         </Item>
         {
-          !props.sDetail ? null
+          props.sDetail ? null
           : <Button.Group>
               <Button icon='trash alternate' onClick={handleClick} />
               <EditProject project={project}/>

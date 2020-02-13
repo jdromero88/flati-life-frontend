@@ -16,14 +16,14 @@ const ProjectsContainer = props => {
           </Form>
       }
       <Divider />
-      <Card.Group itemsPerRow={3} fluid='true'>
+      <Card.Group itemsPerRow={props.home ? 1 : 3} fluid='true'>
         { props.home ?
           props.projects.map(project =>
             <ProjectCard
             key={project.id}
             project={project}
             />
-          ).slice(0,10)
+          ).slice(0,3)
           :
           props.projects.map(project =>
             <ProjectCard

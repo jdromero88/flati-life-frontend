@@ -51,7 +51,7 @@ class Login extends React.Component {
     // this.props.history.push('/profile')
   }
 
-  cohortOptions = this.props.cohorts.map(cohort => ({
+  cohortOptions = () => this.props.cohorts.map(cohort => ({
     key: cohort.id, value: cohort.id, text: cohort.name
   }))
 
@@ -114,7 +114,7 @@ class Login extends React.Component {
     return(
       <React.Fragment>
         <Divider hidden/>
-         <Grid centered columns={1}>
+         <Grid centered columns={1} >
           <Form onSubmit={this.handleLoginSubmit}>
               <Icon name='user circle'size='huge'/>
               <Form.Input
@@ -226,7 +226,7 @@ class Login extends React.Component {
               search
               selection
               name='cohort_id'
-              options={this.cohortOptions}
+              options={this.cohortOptions()}
               onChange={this.handleCohortSelection}
               value={value}
             />
@@ -243,16 +243,6 @@ class Login extends React.Component {
           </Form>
           </Modal.Content>
         </Modal>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
-        <Divider hidden/>
       </React.Fragment>
     )
   }
@@ -261,8 +251,11 @@ const mapDispatchToProps = dispatch => ({loginUser: (user) => dispatch(loginUser
 createUser: (user) => {dispatch(createUser(user))}
 })
 
-const mapStateToProps = store => ({currentUser: store.currentUser,
-  cohorts: store.cohorts,
-})
+const mapStateToProps = store => {
+  // debugger
+  return ({currentUser: store.currentUser,
+    cohorts: store.cohorts,
+  })
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

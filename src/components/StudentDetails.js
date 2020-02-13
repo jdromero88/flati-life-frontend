@@ -41,7 +41,7 @@ const StudentDetails = props => {
         <Grid.Column width={13}>
         <h2>Projects:</h2>
 
-        { props.student.user_projects === [] ? <List.Item>No Projects </List.Item> :
+        { props.student.user_projects.length === 0 ? <h1>The User don't have any project.</h1> :
           props.student.user_projects.map(user_project => <ProjectList key={user_project.id} project={user_project.project} sDetail={sDetail}/>
           )
         }

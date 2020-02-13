@@ -30,7 +30,7 @@ class Profile extends React.Component {
                 <Item>
                   <Item.Content>
                     <Item.Header>{first_name +' '+ last_name} </Item.Header>
-                    <Item.Meta><strong>Bio:</strong></Item.Meta>
+                    <Item.Description><strong>Bio:</strong></Item.Description>
                     <Item.Description>
                       {bio}
                     </Item.Description>
