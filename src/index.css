@@ -47,3 +47,8 @@ code {
 .login-form{
   padding: 60px !important;
 }
+
+.technology-container{
+  background-color:rgba(255,255,255,0.8) !important;
+  padding: 60px !important;
+}

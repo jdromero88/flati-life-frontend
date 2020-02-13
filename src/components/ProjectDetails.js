@@ -1,28 +1,36 @@
 import React from 'react'
-import { Container, Image, List } from 'semantic-ui-react'
+import { Container, Image, List, Divider, Grid, Item } from 'semantic-ui-react'
 const ProjectDetails = props => {
   // debugger
   const project = props.project
   return !project ? null : (
     <React.Fragment>
         <Container>
+        <Divider hidden/>
+        <Divider hidden/>
+          <Grid className='technology-container'>
           <Image
           floated='left'
           size='small'
           src={project.image}
           />
-          <h1>Project Name: {project.name}</h1>
-          <h2>Description:</h2>
-          <p>{project.description}</p>
-          <h2>Repository:</h2>
-          <List>
-          <List.Item>
-            <List.Icon name='linkify' />
-            <List.Content>
-              <a href={project.repository_url}  target='_blank' rel="noreferrer noopener">{project.repository_url}</a>
-            </List.Content>
-          </List.Item>
-          </List>
+          <Item.Group>
+            <Item>
+              <Item.Content>
+                <Item.Header>Name: {project.name} </Item.Header>
+                <Item.Description></Item.Description>
+                <Item.Description>
+                  <strong>Description: </strong>
+                  {project.description}
+                </Item.Description>
+                <Item.Description as='a' href={project.repository_url} target='_blank'>
+                <strong>Repository: </strong>
+                {project.repository_url}
+                </Item.Description>
+              </Item.Content>
+            </Item>
+          </Item.Group>
+          </Grid>
         </Container>
     </React.Fragment>
   )
