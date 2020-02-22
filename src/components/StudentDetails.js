@@ -1,5 +1,5 @@
 import React from 'react'
-import {Container, Image, Item, List, Grid, Divider} from 'semantic-ui-react'
+import {Container, Image, Item, Grid, Divider} from 'semantic-ui-react'
 import moment from 'moment'
 import ProjectList from '../containers/ProjectList'
 const StudentDetails = props => {

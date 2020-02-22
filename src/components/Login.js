@@ -69,7 +69,6 @@ class Login extends React.Component {
     this.setState({ course_name: value })
   }
 
-
   resetSubmitNewUserStates = () => {
     this.setState({
       username:'',
@@ -136,11 +135,8 @@ class Login extends React.Component {
                 disabled={this.state.username && this.state.password ? false : true}
                 type='submit'
               >Login</Button>
-
-
             <Divider />
-
-              <Button onClick={this.handleOpen('blurring')} type='button'>Create a new account</Button>
+            <Button onClick={this.handleOpen('blurring')} type='button'>Create a new account</Button>
           </Form>
         </Grid>
         <Modal dimmer={dimmer} open={modalOpen} onClose={this.handleClose} closeIcon

@@ -4,10 +4,9 @@ import { Container,
   Divider,
   Grid,
   Header,
-  Image,
   List,
   Segment,} from 'semantic-ui-react'
-import flatiLogo from '../assets/flatilifelogo.jpg'
+// import flatiLogo from '../assets/flatilifelogo.jpg'
 const currentDate = new Date()
 const FooterContent = () => {
   return(

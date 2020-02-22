@@ -14,6 +14,7 @@ class EditProfile extends React.Component {
       editUser:{},
       modalOpen: false,
   }
+
   componentDidMount() {
     this.setState({editUser: this.props.currentUser})
   }
@@ -77,9 +78,8 @@ class EditProfile extends React.Component {
     this.closeModal()
   }
   render(){
-    const { modalOpen, value} = this.state
-    const {editUser} = this.state
-
+    const { modalOpen, editUser } = this.state
+    // debugger
     return(
       <React.Fragment>
       <Button animated onClick={this.openModal}>
@@ -180,6 +180,7 @@ class EditProfile extends React.Component {
             name='cohort_id'
             options={this.cohortOptions}
             onChange={this.handleCohortSelection}
+            defaultValue={Object.keys(this.state.editUser).length === 0  ? 1 : editUser.cohort.id}
           />
           <Button type='submit'
           disabled={this.state.username !== '' ? false : true}
