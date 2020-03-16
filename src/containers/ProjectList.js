@@ -5,6 +5,7 @@ import {deleteProject} from '../redux/actionCreators'
 import EditProject from '../components/EditProject'
 import {Button, Divider, Item } from 'semantic-ui-react'
 import swal from 'sweetalert'
+import logo from '../assets/logo.png'
 const ProjectList = props => {
   const handleClick = () => {
     // console.log('delete this project', project)
@@ -28,7 +29,7 @@ const ProjectList = props => {
     <React.Fragment>
       <Item.Group link>
         <Item as={Link} to={`/projects/${id}`}>
-        <Item.Image size='tiny' src={!image ? 'https://inteligenciamm.com.br/wp-content/uploads/2015/10/Logo-Default.png' : image} />
+        <Item.Image size='tiny' src={!image ? logo : image} />
         <Item.Content>
           <Item.Header>{name}</Item.Header>
           <Item.Description>{description}</Item.Description>

@@ -7,11 +7,12 @@ Form, Button,
 Image, Icon,
 Grid, } from 'semantic-ui-react'
 import swal from 'sweetalert'
+import logo from '../assets/logo.png'
 class AddProject extends React.Component {
   state = {
     name: '',
     description: '',
-    image: 'https://inteligenciamm.com.br/wp-content/uploads/2015/10/Logo-Default.png',
+    image: logo,
     repository_url: '',
     modalIsOpen: false,
     modalProfileIsOpen: false,

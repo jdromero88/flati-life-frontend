@@ -14,22 +14,14 @@ import { SEARCH_TEXT,
   DELETE_PROJECT,
 } from './actionType'
 import swal from 'sweetalert'
-//deployed
-// https://immense-crag-19841.herokuapp.com/
-const URL = 'https://immense-crag-19841.herokuapp.com/'
+
+//local
+const URL = 'http://localhost:3000/'
 const USER_URL = `${URL}users`
-const USER_LOGIN_URL = `${URL}login`
+const USER_LOGIN_URL = `${URL}/users/login`
 const PROJECTS_URL = `${URL}projects`
 const TECHNOLOGIES_URL = `${URL}tech_specifications`
 const COHORTS_URL = `${URL}cohorts`
-
-
-//local
-// const USER_URL = 'http://localhost:3000/users'
-// const USER_LOGIN_URL = 'http://localhost:3000/users/login'
-// const PROJECTS_URL = 'http://localhost:3000/projects'
-// const TECHNOLOGIES_URL = 'http://localhost:3000/tech_specifications'
-// const COHORTS_URL = 'http://localhost:3000/cohorts'
 
 function loading() {
   return {type:LOADING}
