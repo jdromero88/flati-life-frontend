@@ -4,7 +4,7 @@ This is a space to link up with Flatiron students new and old.
 - Exhibit your projects and see what others are working on.
 - Give feedback, share ideas and provide moral support.
 
-<img src='./src/images/flatilife.png' alt="flatilife-demo" width="500px" />
+<img src='./src/images/flatilife.png' alt="flatilife-demo" width="946px" />
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
