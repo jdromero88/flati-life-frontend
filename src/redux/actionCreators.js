@@ -16,7 +16,9 @@ import { SEARCH_TEXT,
 import swal from 'sweetalert'
 
 //local
-const URL = 'http://localhost:3000/'
+// const URL = 'http://localhost:3000/'
+//Heroku
+const URL = 'https://immense-crag-19841.herokuapp.com/'
 const USER_URL = `${URL}users`
 const USER_LOGIN_URL = `${URL}/users/login`
 const PROJECTS_URL = `${URL}projects`
