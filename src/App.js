@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import { Route, Switch, Redirect, withRouter} from 'react-router-dom'
-import { Container } from "semantic-ui-react"
+import { Container, Dimmer, Loader, Segment } from "semantic-ui-react"
 import {connect} from 'react-redux'
 import {
   fetchingUsers,
@@ -32,7 +32,13 @@ class App extends Component {
   }
 
   render(){
-    return (
+    return !this.props.projects ? (
+      <Segment>
+        <Dimmer active>
+          <Loader indeterminate>Preparing Files</Loader>
+        </Dimmer>
+      </Segment>
+    ):(
       <div className='main-container'>
         <Header />
         <Container className='container-container'>
