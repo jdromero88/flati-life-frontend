@@ -11,6 +11,7 @@ const filterBy = [
 class StudentsContainer extends React.Component{
   state ={
     filterType: 'all',
+    
   }
   handleFilter = (e, {value}) => {
     this.setState({

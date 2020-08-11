@@ -35,7 +35,7 @@ class App extends Component {
     return !this.props.projects ? (
       <Segment>
         <Dimmer active>
-          <Loader indeterminate>Preparing Files</Loader>
+          <Loader indeterminate>Loading App</Loader>
         </Dimmer>
       </Segment>
     ):(
